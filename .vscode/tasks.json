@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run MySketch",
+            "type": "shell",
+            "command": "javac -cp lib/core.jar -d bin src/MySketch.java && java -cp bin:lib/core.jar src.MySketch",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}

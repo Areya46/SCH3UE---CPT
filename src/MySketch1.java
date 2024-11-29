@@ -1,6 +1,8 @@
+import java.util.Scanner;
+import java.util.Random;
 import processing.core.PApplet;
 
-public class Sketch2 extends PApplet {
+public class MySketch1 extends PApplet {
 	
 	
   /**

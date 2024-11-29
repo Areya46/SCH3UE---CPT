@@ -1,3 +1,5 @@
+import java.util.Scanner;
+import java.util.Random;
 import processing.core.PApplet;
 
 /**
@@ -9,7 +11,7 @@ class Main {
   public static void main(String[] args) {
     
     String[] processingArgs = {"MySketch"};
-	  Sketch mySketch = new Sketch();  //comment this out to run the other sketch files
+	  MySketch mySketch = new MySketch();  //comment this out to run the other sketch files
 	  // Sketch1 mySketch = new Sketch1();  // uncomment this to run this sketch file
 	  // Sketch2 mySketch = new Sketch2();  // uncomment this to run this sketch file
 	  
