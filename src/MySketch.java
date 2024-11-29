@@ -1,19 +1,36 @@
 import java.util.Scanner;
 import java.util.Random;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class MySketch extends PApplet {
 
+    Random myRandom = new Random();
+
+    //Set Up the screen size
     public void settings() {
-        size(800, 600);
+        size(1400, 800);
     }
 
+    //This is where all the buttons will be 
     public void draw() {
-        background(200);
-        ellipse(width / 2, height / 2, 50, 50);
+        
     }
+
+    public void setup() {
+        //Set background colour
+        background(232, 237, 250);
+        //Load images
+    }
+      
 
     public static void main(String[] args) {
         PApplet.main("MySketch");
     }
+
+    public void mouseDragged(){}
+    public void mouseClicked(){}
+    public void keyPressed(){}
+    public void keyReleased(){}
+    public void keyTyped(){}
 }
