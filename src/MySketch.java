@@ -12,9 +12,14 @@ public class MySketch extends PApplet {
         size(1400, 800);
     }
 
-    //This is where all the buttons will be 
+    //This is where all the buttons and visual stuff will be
     public void draw() {
-        
+        float division = width / parseFloat(3);
+
+        // Draw the vertical line dividing the two sides of the screen
+        stroke(106, 133, 166);
+        strokeWeight(5); 
+        line(division, 0, division, height); 
     }
 
     public void setup() {

@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.Random;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class MySketch1 extends PApplet {
 	
@@ -10,7 +11,7 @@ public class MySketch1 extends PApplet {
    */
   public void settings() {
 	// put your size call here
-    size(400, 400);
+    size(1400, 800);
   }
 
   /** 
@@ -26,12 +27,12 @@ public class MySketch1 extends PApplet {
    */
   public void draw() {
 	  
-	// sample code, delete this stuff
-    stroke(128);
-    line(150, 25, 270, 350);  
+    float division = (1/3)*width;
 
-    stroke(255);
-    line(50, 125, 70, 50);  
+    // Draw the vertical line
+    stroke(54, 71, 92); // Set the line color to black
+    strokeWeight(5); // Set the line thickness
+    line(division, 0, division, height); // Line from top to bottom of the screen
   }
   
   // define other methods down here.

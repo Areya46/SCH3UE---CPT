@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.Random;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 /**
  * Main class to execute sketch
