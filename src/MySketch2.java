@@ -11,7 +11,7 @@ public class MySketch2 extends PApplet {
    */
   public void settings() {
 	// put your size call here
-    size(400, 400);
+      size(1250, 600);
   }
 
   /** 
