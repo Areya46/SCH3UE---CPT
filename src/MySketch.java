@@ -10,6 +10,7 @@ public class MySketch extends PApplet {
     // WelcomePage Variables
     PImage imgWelcomePage;
     PImage imgPatientNumber;
+    PImage imgLoadingScreen;
     boolean blnGetStartedselected;
     
     //Set Up the screen size
@@ -49,6 +50,7 @@ public class MySketch extends PApplet {
 
     public void welcomePage(){
         image(imgWelcomePage, 25, 30);
+        image(imgLoadingScreen, 25, 30);
     }
 
     public void loadPatientImages(){
@@ -60,6 +62,10 @@ public class MySketch extends PApplet {
         // Insert patient number
         imgPatientNumber = loadImage("/Images/pleaseEnterPatientNumber.png");
         imgPatientNumber.resize(width, height);
+
+        // Insert patient number
+        imgLoadingScreen = loadImage("/Images/LoadingScreen.png");
+        imgLoadingScreen.resize(width, height);
     }
 
     public void patientNumebr(){
