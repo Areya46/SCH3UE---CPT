@@ -42,6 +42,7 @@ public class MySketch2 extends PApplet {
         if (!blnGetStartedselected){
             welcomePage();
         }
+
     }
       
     public static void main(String[] args) {
@@ -68,22 +69,66 @@ public class MySketch2 extends PApplet {
         imgLoadingScreen.resize(width, height);
     }
 
+    // Line where number will be enteredss
+    String userInput = ""; // Variable to store the user input
+    boolean isTyping = false; // Flag to indicate if user is typing
+    int listSize = 0; // Variable for the size of the list
     public void patientNumebr(){
         // Text saying to enter patient number below
         image(imgPatientNumber, 0, 20);
 
-        // Line where number will be enteredss
+        // Draw the text box
+        fill(255, 203, 79);
+        stroke(255, 149, 0);
+        rect(50, 150, 200, 60); // Text box
+
+        // Display the user's input
+        fill(15, 47, 118);
+        textSize(60);
+        text(userInput, 60, 200);
+
+        // Display the list size
+        textSize(16);
+        text("Number Of Patients: " + listSize, 50, 250);
+
+        // Display the list size
+        textSize(30);
+        text("Current Amount Of Patients: " + listSize, 450, 50);
+
     }
 
     public void mouseClicked(){
         if (mouseX >= 100 && mouseX <= 320 && mouseY >= 330 && mouseY <= 380){
             blnGetStartedselected = true;
         }
+
+        if (mouseX > 50 && mouseX < 250 && mouseY > 150 && mouseY < 210) {
+          isTyping = true;
+        } else {
+          isTyping = false;
+        }
     }
 
     public void mouseDragged(){}
     
-    public void keyPressed(){}
+    public void keyPressed(){
+      if (isTyping) {
+        if (key >= '0' && key <= '9') {
+          // Add numeric input to the string
+          userInput += key;
+        } else if (key == BACKSPACE && userInput.length() > 0) {
+          // Remove the last character on backspace
+          userInput = userInput.substring(0, userInput.length() - 1);
+        } else if (key == ENTER || key == RETURN) {
+          // Convert input to a number and update list size
+          if (!userInput.isEmpty()) {
+            listSize = Integer.parseInt(userInput);
+            userInput = ""; // Clear the input after setting the variable
+          }
+        }
+      }
+    }
+    
     
     public void keyReleased(){}
     

@@ -38,6 +38,7 @@ public class MySketch extends PApplet {
         // USER PART OF THE SCREEN
         if (blnGetStartedselected){
             patientNumebr();
+            
         }
         if (!blnGetStartedselected){
             welcomePage();
@@ -72,7 +73,7 @@ public class MySketch extends PApplet {
         // Text saying to enter patient number below
         image(imgPatientNumber, 0, 20);
 
-        // Line where number will be enteredss
+        //Line where user will add an input
     }
 
     public void mouseClicked(){
