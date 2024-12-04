@@ -4,36 +4,176 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class MySketch1 extends PApplet {
-	
-	
-  /**
-   * Called once at the beginning of execution, put your size all in this method
-   */
-  public void settings() {
-	// put your size call here
-  size(1250, 600);
-  }
 
-  /** 
-   * Called once at the beginning of execution.  Add initial set up
-   * values here i.e background, stroke, fill etc.
-   */
-  public void setup() {
-    background(210, 255, 173);
-  }
+    Random myRandom = new Random();
 
-  /**
-   * Called repeatedly, anything drawn to the screen goes here
-   */
-  public void draw() {
-	  
-    float division = (1/3)*width;
+    // WelcomePage Variables
+    PImage imgWelcomePage;
+    PImage imgPatientNumber;
+    PImage imgLoadingScreen;
+    boolean blnGetStartedselected;
 
-    // Draw the vertical line
-    stroke(54, 71, 92); // Set the line color to black
-    strokeWeight(5); // Set the line thickness
-    line(division, 0, division, height); // Line from top to bottom of the screen
-  }
+    // General Image variables
+    PImage imgLogo;
+
+    // Line where number will be enteredss
+    String userInput = ""; // Variable to store the user input
+    boolean isTyping = false; // Flag to indicate if user is typing
+    int listSize = 0; // Variable for the size of the list
+    
+    //Set Up the screen size
+
+    public void settings() {
+        size(1250, 600);
+    }
+
+    public void setup() {
+        //Set background colour
+        background(232, 237, 250);
+        loadPatientImages();
+    }
+
+    public void draw() {
+        float division = width / parseFloat(3);
+
+        background(232, 237, 250);
+        image(imgLogo, 30, 5);
+
+        // Draw the vertical line dividing the two sides of the screen
+        stroke(106, 133, 166);
+        strokeWeight(5); 
+        line(division, 0, division, height); 
+
+        // USER PART OF THE SCREEN
+        if (blnGetStartedselected){
+            patientNumber();
+        }
+        if (!blnGetStartedselected){
+            welcomePage();
+        }
+
+        patientGeneration();
+
+    }
+      
+    public static void main(String[] args) {
+        PApplet.main("MySketch");
+    }
+
+    public void welcomePage(){
+        image(imgWelcomePage, 25, 30);
+        image(imgLoadingScreen, 25, 30);
+
+    }
+
+    public void generalImages(){
+      // Logo 
+      imgLogo = loadImage("/Images/Logo.png");
+      imgLogo.resize(150, 600);
+    }
+
+    public void loadPatientImages(){
+
+        // Welcome page 
+        imgWelcomePage = loadImage("/Images/WelcomePage.png");
+        imgWelcomePage.resize(350, 515);
+
+        // Insert patient number
+        imgPatientNumber = loadImage("/Images/pleaseEnterPatientNumber.png");
+        imgPatientNumber.resize(width, height);
+
+        // Insert patient number
+        imgLoadingScreen = loadImage("/Images/LoadingScreen.png");
+        imgLoadingScreen.resize(width, height);
+    }
+
+    public void patientNumber(){
+        // Text saying to enter patient number below
+        image(imgPatientNumber, 0, 20);
+
+        // Draw the text box
+        fill(255, 203, 79);
+        stroke(255, 149, 0);
+        rect(50, 150, 200, 60); // Text box
+
+        // Display the user's input
+        fill(15, 47, 118);
+        textSize(60);
+        text(userInput, 60, 200);
+
+        // Display the list size
+        textSize(16);
+        text("Patient Number: " + listSize, 50, 250);
+
+        // Display the list size
+        textSize(30);
+        text("Current Patient's Number: " + listSize, 450, 50);
+
+    }
+
+    public void patientGeneration(){
+      int quantity = 20;
+      Random random = new Random();
   
-  // define other methods down here.
+      String[] firstNames = {
+          "John", "Emily", "Michael", "Sophia", "David", "Olivia", 
+          "James", "Isabella", "Daniel", "Mia", "Ethan", "Ava", 
+          "Alexander", "Charlotte", "Benjamin", "Amelia", "Lucas", 
+          "Harper", "Henry", "Ella"
+      };
+
+      String[] lastNames = {
+          "Smith", "Johnson", "Brown", "Williams", "Jones", "Garcia", 
+          "Miller", "Davis", "Martinez", "Hernandez", "Lopez", "Gonzalez", 
+          "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", 
+          "White", "Harris"
+      };
+      
+      int[] patientsNum = new int[quantity];
+
+      for (int amount = 0; amount < quantity; amount++){
+        patientsNum[amount] = random.nextInt(1000);
+        fill(15, 47, 118);
+        textSize(16);
+        text(("First Name: "+firstNames[amount]+"\t\t Last Name: "+lastNames[amount]+"\t\t Patient Number: "+patientsNum[amount]).toString(), 500, 20*(amount));
+        System.out.println(("First Name: "+ firstNames[amount]+"\t Last Name: "+lastNames[amount]+"\t Patient Number: "+patientsNum[amount]).toString());
+      }
+    }
+
+    public void mouseClicked(){
+        if (mouseX >= 100 && mouseX <= 320 && mouseY >= 330 && mouseY <= 380){
+            blnGetStartedselected = true;
+        }
+
+        if (mouseX > 50 && mouseX < 250 && mouseY > 150 && mouseY < 210) {
+          isTyping = true;
+        } else {
+          isTyping = false;
+        }
+    }
+
+    public void mouseDragged(){}
+    
+    public void keyPressed(){
+      if (isTyping) {
+        if (key >= '0' && key <= '9') {
+          // Add numeric input to the string
+          userInput += key;
+        } else if (key == BACKSPACE && userInput.length() > 0) {
+          // Remove the last character on backspace
+          userInput = userInput.substring(0, userInput.length() - 1);
+        } else if (key == ENTER || key == RETURN) {
+          // Convert input to a number and update list size
+          if (!userInput.isEmpty()) {
+            listSize = Integer.parseInt(userInput);
+            userInput = ""; // Clear the input after setting the variable
+          }
+        }
+      }
+    }
+    
+    
+    public void keyReleased(){}
+    
+    public void keyTyped(){}
 }
