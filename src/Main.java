@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.util.Random;
 import processing.core.PApplet;
 import processing.core.PImage;
+import java.util.Arrays;
 
 /**
  * Main class to execute sketch
