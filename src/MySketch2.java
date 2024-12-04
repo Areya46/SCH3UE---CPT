@@ -12,6 +12,13 @@ public class MySketch2 extends PApplet {
     PImage imgPatientNumber;
     PImage imgLoadingScreen;
     boolean blnGetStartedselected;
+
+    // Line where number will be enteredss
+    String userInput = ""; // Variable to store the user input
+    boolean isTyping = false; // Flag to indicate if user is typing
+    int listSize = 0; // Variable for the size of the list
+
+    
     
     //Set Up the screen size
 
@@ -37,11 +44,13 @@ public class MySketch2 extends PApplet {
 
         // USER PART OF THE SCREEN
         if (blnGetStartedselected){
-            patientNumebr();
+            patientNumber();
         }
         if (!blnGetStartedselected){
             welcomePage();
         }
+
+        patientGeneration();
 
     }
       
@@ -52,6 +61,7 @@ public class MySketch2 extends PApplet {
     public void welcomePage(){
         image(imgWelcomePage, 25, 30);
         image(imgLoadingScreen, 25, 30);
+
     }
 
     public void loadPatientImages(){
@@ -69,11 +79,7 @@ public class MySketch2 extends PApplet {
         imgLoadingScreen.resize(width, height);
     }
 
-    // Line where number will be enteredss
-    String userInput = ""; // Variable to store the user input
-    boolean isTyping = false; // Flag to indicate if user is typing
-    int listSize = 0; // Variable for the size of the list
-    public void patientNumebr(){
+    public void patientNumber(){
         // Text saying to enter patient number below
         image(imgPatientNumber, 0, 20);
 
@@ -95,6 +101,35 @@ public class MySketch2 extends PApplet {
         textSize(30);
         text("Current Patient's Number: " + listSize, 450, 50);
 
+    }
+
+    public void patientGeneration(){
+      int quantity = 20;
+      Random random = new Random();
+  
+      String[] firstNames = {
+          "John", "Emily", "Michael", "Sophia", "David", "Olivia", 
+          "James", "Isabella", "Daniel", "Mia", "Ethan", "Ava", 
+          "Alexander", "Charlotte", "Benjamin", "Amelia", "Lucas", 
+          "Harper", "Henry", "Ella"
+      };
+
+      String[] lastNames = {
+          "Smith", "Johnson", "Brown", "Williams", "Jones", "Garcia", 
+          "Miller", "Davis", "Martinez", "Hernandez", "Lopez", "Gonzalez", 
+          "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", 
+          "White", "Harris"
+      };
+      
+      int[] patientsNum = new int[quantity];
+
+      for (int amount = 0; amount < quantity; amount++){
+        patientsNum[amount] = random.nextInt(1000);
+        fill(15, 47, 118);
+        textSize(16);
+        text(("First Name: "+firstNames[amount]+"\t\t Last Name: "+lastNames[amount]+"\t\t Patient Number: "+patientsNum[amount]).toString(), 500, 20*(amount));
+        System.out.println(("First Name: "+firstNames[amount]+"\t Last Name: "+lastNames[amount]+"\t Patient Number: "+patientsNum[amount]).toString());
+      }
     }
 
     public void mouseClicked(){
