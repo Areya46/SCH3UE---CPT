@@ -89,11 +89,11 @@ public class MySketch2 extends PApplet {
 
         // Display the list size
         textSize(16);
-        text("Number Of Patients: " + listSize, 50, 250);
+        text("Patient Number: " + listSize, 50, 250);
 
         // Display the list size
         textSize(30);
-        text("Current Amount Of Patients: " + listSize, 450, 50);
+        text("Current Patient's Number: " + listSize, 450, 50);
 
     }
 
