@@ -123,6 +123,7 @@ public class MySketch2 extends PApplet {
         }
         reprint+=1;
       }
+      
 
       for (int amount = 0; amount < quantity; amount++){
         
