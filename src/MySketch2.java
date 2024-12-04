@@ -127,7 +127,7 @@ public class MySketch2 extends PApplet {
         patientsNum[amount] = random.nextInt(1000);
         fill(15, 47, 118);
         textSize(16);
-        text(("First Name: "+firstNames[amount]+"\t\t Last Name: "+lastNames[amount]+"\t\t Patient Number: "+patientsNum[amount]).toString(), 500, 20*(amount));
+        text(("First Name: "+firstNames[amount]+"\t\t Last Name: "+lastNames[amount]+"\t\t Patient Number: "+patientsNum[amount]).toString(), 500, 100+(20*(amount)));
         System.out.println(("First Name: "+firstNames[amount]+"\t Last Name: "+lastNames[amount]+"\t Patient Number: "+patientsNum[amount]).toString());
       }
     }
