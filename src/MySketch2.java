@@ -9,7 +9,6 @@ public class MySketch2 extends PApplet {
 
     // WelcomePage Variables
     PImage imgWelcomePage;
-    PImage imgPatientNumber;
     boolean blnGetStartedselected;
 
     // Line where number will be enteredss
@@ -69,15 +68,10 @@ public class MySketch2 extends PApplet {
         imgWelcomePage = loadImage("/Images/WelcomePage.png");
         imgWelcomePage.resize(350, 515);
 
-        // Insert patient number
-        imgPatientNumber = loadImage("/Images/pleaseEnterPatientNumber.png");
-        imgPatientNumber.resize(width, height);
-
     }
 
     public void patientNumber(){
         // Text saying to enter patient number below
-        image(imgPatientNumber, 0, 20);
 
         // Draw the text box
         fill(255, 203, 79);
@@ -123,20 +117,14 @@ public class MySketch2 extends PApplet {
         }
         reprint+=1;
       }
-      
 
       for (int amount = 0; amount < quantity; amount++){
         
         fill(15, 47, 118);
-<<<<<<< HEAD
-        textSize(16);
-        text(("First Name: "+firstNames[amount]+"\t\t Last Name: "+lastNames[amount]+"\t\t Patient Number: "+patientsNum[amount]).toString(), 500, 20*(amount));
-        System.out.println(("First Name: "+ firstNames[amount]+"\t Last Name: "+lastNames[amount]+"\t Patient Number: "+patientsNum[amount]).toString());
-=======
+
         textSize(18);
         text(("First Name: "+firstNames[amount]+"\t\t Last Name: "+lastNames[amount]+"\t\t Patient Number: "+patientsNum[amount]).toString(), 500, 30+(28*(amount)));
-        //System.out.println(("First Name: "+firstNames[amount]+"\t Last Name: "+lastNames[amount]+"\t Patient Number: "+patientsNum[amount]).toString());
->>>>>>> 0b013372e2d200097b559fb722392699c95b21c8
+        System.out.println(("First Name: "+ firstNames[amount]+"\t Last Name: "+lastNames[amount]+"\t Patient Number: "+patientsNum[amount]).toString());
       }
     }
 
