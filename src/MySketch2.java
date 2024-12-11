@@ -19,6 +19,10 @@ public class MySketch2 extends PApplet {
     int currentPatient = 0; // Variable for the size of the list
     int reprint = 0;
 
+    int amount = 0;
+    boolean showname = true;
+    boolean checkbutton = true;
+    boolean showPatient = true;
     int[] patientsNum = new int[20];
     String[] firstNames = {
         "John", "Emily", "Michael", "Sophia", "David", "Olivia", 
@@ -56,8 +60,9 @@ public class MySketch2 extends PApplet {
         strokeWeight(5); 
         line(division, 0, division, height); 
 
-        patientGeneration();
-
+        if (showPatient){
+          patientGeneration();
+        }
         // USER PART OF THE SCREEN
         if (blnGetStartedselected){
             patientNumber();
@@ -130,15 +135,25 @@ public class MySketch2 extends PApplet {
         reprint+=1;
       }
 
-      for (int amount = 0; amount < quantity; amount++){
+      for (amount = 0; amount < quantity; amount++){
         
         fill(15, 47, 118);
 
         textSize(18);
+        text(" > ", 450, 30+(28*(amount)));
         text(("First Name: "+firstNames[amount]), 500, 30+(28*(amount)));
         text(("Last Name: "+lastNames[amount]), 750, 30+(28*(amount)));
         text(("Patient Number: "+patientsNum[amount]), 1000, 30+(28*(amount)));
         //System.out.println(("First Name: "+ firstNames[amount]+"\t Last Name: "+lastNames[amount]+"\t Patient Number: "+patientsNum[amount]).toString());
+      }
+    }
+
+    public void patientInfo(int position){
+      String namePatient = firstNames[position-1] + lastNames[position-1];
+      for (int i =0; i<800; i++){
+        fill(255,0,0);
+        textSize(40);
+        text(namePatient, 450, 100);
       }
     }
 
@@ -151,6 +166,24 @@ public class MySketch2 extends PApplet {
           isTyping = true;
         } else {
           isTyping = false;
+        }
+
+        if (checkbutton){
+          if (mouseX > 450 && mouseX < 475 && mouseY > 20 && mouseY < 565){
+            
+            double position = 545.0/20.0;
+            int number = 0;
+            for(int i = 0; i < 20; i++){
+              if(mouseY < 20+(i*position)){
+                number = i;
+                break;
+              }
+            }
+            patientInfo(number);
+            showPatient = false;
+            checkbutton = false;
+            
+          }
         }
     }
 
