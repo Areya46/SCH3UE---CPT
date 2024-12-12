@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.util.Random;
 import processing.core.PApplet;
 import processing.core.PImage;
+import java.util.Arrays;
 
 public class MySketch2 extends PApplet {
 
@@ -15,11 +16,27 @@ public class MySketch2 extends PApplet {
     // Line where number will be enteredss
     String userInput = ""; // Variable to store the user input
     boolean isTyping = false; // Flag to indicate if user is typing
-    int listSize = 0; // Variable for the size of the list
+    int currentPatient = 0; // Variable for the size of the list
     int reprint = 0;
 
+    int amount = 0;
+    boolean showname = true;
+    boolean checkbutton = true;
+    boolean showPatient = true;
     int[] patientsNum = new int[20];
-    
+    String[] firstNames = {
+        "John", "Emily", "Michael", "Sophia", "David", "Olivia", 
+        "James", "Isabella", "Daniel", "Mia", "Ethan", "Ava", 
+        "Alexander", "Charlotte", "Benjamin", "Amelia", "Lucas", 
+        "Harper", "Henry", "Ella"
+    };
+
+    String[] lastNames = {
+        "Smith", "Johnson", "Brown", "Williams", "Jones", "Garcia", 
+        "Miller", "Davis", "Martinez", "Hernandez", "Lopez", "Gonzalez", 
+        "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", 
+        "White", "Harris"
+    };
     
     //Set Up the screen size
 
@@ -43,13 +60,15 @@ public class MySketch2 extends PApplet {
         strokeWeight(5); 
         line(division, 0, division, height); 
 
+        if (showPatient){
+          patientGeneration();
+        }
         // USER PART OF THE SCREEN
         if (blnGetStartedselected){
             patientNumber();
         }
         if (!blnGetStartedselected){
             welcomePage();
-            patientGeneration();
         }
         
     }
@@ -77,8 +96,8 @@ public class MySketch2 extends PApplet {
 
     public void patientNumber(){
         // Text saying to enter patient number below
-        image(imgPatientNumber, 0, 20);
 
+        image(imgPatientNumber, 0, 20);
         // Draw the text box
         fill(255, 203, 79);
         stroke(255, 149, 0);
@@ -91,11 +110,15 @@ public class MySketch2 extends PApplet {
 
         // Display the list size
         textSize(16);
-        text("Patient Number: " + listSize, 50, 250);
+        text("Patient Number: " + currentPatient, 50, 250);
 
         // Display the list size
         textSize(30);
-        text("Current Patient's Number: " + listSize, 450, 50);
+        int index = Arrays.stream(patientsNum).boxed().toList().indexOf(currentPatient);
+        if (index >= 0){
+          text(("Nice To Meet You " + firstNames[index]+ "!"), 50, 450);
+        }
+        
 
     }
 
@@ -103,37 +126,43 @@ public class MySketch2 extends PApplet {
       int quantity = 20;
       Random random = new Random();
   
-      String[] firstNames = {
-          "John", "Emily", "Michael", "Sophia", "David", "Olivia", 
-          "James", "Isabella", "Daniel", "Mia", "Ethan", "Ava", 
-          "Alexander", "Charlotte", "Benjamin", "Amelia", "Lucas", 
-          "Harper", "Henry", "Ella"
-      };
 
-      String[] lastNames = {
-          "Smith", "Johnson", "Brown", "Williams", "Jones", "Garcia", 
-          "Miller", "Davis", "Martinez", "Hernandez", "Lopez", "Gonzalez", 
-          "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", 
-          "White", "Harris"
-      };
       
       if(reprint == 0){
         for (int i = 0; i < quantity; i++){
-            patientsNum[i] = random.nextInt(1000);
+            patientsNum[i] = random.nextInt((i*100),((i+1) *100));
         }
         reprint+=1;
       }
-      
 
-      for (int amount = 0; amount < quantity; amount++){
+      for (amount = 0; amount < quantity; amount++){
         
         fill(15, 47, 118);
+<<<<<<< HEAD
         textSize(16);
         text(("First Name: "+firstNames[amount]+"\t\t Last Name: "+lastNames[amount]+"\t\t Patient Number: "+patientsNum[amount]).toString(), 500, 20*(amount));
         System.out.println(("First Name: "+ firstNames[amount]+"\t Last Name: "+lastNames[amount]+"\t Patient Number: "+patientsNum[amount]).toString());
         textSize(18);
         text(("First Name: "+firstNames[amount]+"\t\t Last Name: "+lastNames[amount]+"\t\t Patient Number: "+patientsNum[amount]).toString(), 500, 30+(28*(amount)));
         //System.out.println(("First Name: "+firstNames[amount]+"\t Last Name: "+lastNames[amount]+"\t Patient Number: "+patientsNum[amount]).toString());
+=======
+
+        textSize(18);
+        text(" > ", 450, 30+(28*(amount)));
+        text(("First Name: "+firstNames[amount]), 500, 30+(28*(amount)));
+        text(("Last Name: "+lastNames[amount]), 750, 30+(28*(amount)));
+        text(("Patient Number: "+patientsNum[amount]), 1000, 30+(28*(amount)));
+        //System.out.println(("First Name: "+ firstNames[amount]+"\t Last Name: "+lastNames[amount]+"\t Patient Number: "+patientsNum[amount]).toString());
+      }
+    }
+
+    public void patientInfo(int position){
+      String namePatient = firstNames[position-1] + lastNames[position-1];
+      for (int i =0; i<800; i++){
+        fill(255,0,0);
+        textSize(40);
+        text(namePatient, 450, 100);
+>>>>>>> 9c6d32e1cea2d8d123f3d851b7b08ffd76d04e76
       }
     }
 
@@ -146,6 +175,24 @@ public class MySketch2 extends PApplet {
           isTyping = true;
         } else {
           isTyping = false;
+        }
+
+        if (checkbutton){
+          if (mouseX > 450 && mouseX < 475 && mouseY > 20 && mouseY < 565){
+            
+            double position = 545.0/20.0;
+            int number = 0;
+            for(int i = 0; i < 20; i++){
+              if(mouseY < 20+(i*position)){
+                number = i;
+                break;
+              }
+            }
+            patientInfo(number);
+            showPatient = false;
+            checkbutton = false;
+            
+          }
         }
     }
 
@@ -162,13 +209,12 @@ public class MySketch2 extends PApplet {
         } else if (key == ENTER || key == RETURN) {
           // Convert input to a number and update list size
           if (!userInput.isEmpty()) {
-            listSize = Integer.parseInt(userInput);
+            currentPatient = Integer.parseInt(userInput);
             userInput = ""; // Clear the input after setting the variable
           }
         }
       }
     }
-    
     
     public void keyReleased(){}
     
