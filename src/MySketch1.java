@@ -10,16 +10,19 @@ public class MySketch1 extends PApplet {
     // WelcomePage Variables
     PImage imgWelcomePage;
     PImage imgPatientNumber;
-    PImage imgLoadingScreen;
     boolean blnGetStartedselected;
 
-    // General Image variables
-    PImage imgLogo;
+    // Changing screen variables
+    boolean blnMoveToTutorialPage;
 
     // Line where number will be enteredss
     String userInput = ""; // Variable to store the user input
     boolean isTyping = false; // Flag to indicate if user is typing
     int listSize = 0; // Variable for the size of the list
+    int reprint = 0;
+
+    int[] patientsNum = new int[20];
+    
     
     //Set Up the screen size
 
@@ -37,7 +40,6 @@ public class MySketch1 extends PApplet {
         float division = width / parseFloat(3);
 
         background(232, 237, 250);
-        image(imgLogo, 30, 5);
 
         // Draw the vertical line dividing the two sides of the screen
         stroke(106, 133, 166);
@@ -50,10 +52,9 @@ public class MySketch1 extends PApplet {
         }
         if (!blnGetStartedselected){
             welcomePage();
+            patientGeneration();
         }
-
-        patientGeneration();
-
+        
     }
       
     public static void main(String[] args) {
@@ -62,14 +63,7 @@ public class MySketch1 extends PApplet {
 
     public void welcomePage(){
         image(imgWelcomePage, 25, 30);
-        image(imgLoadingScreen, 25, 30);
 
-    }
-
-    public void generalImages(){
-      // Logo 
-      imgLogo = loadImage("/Images/Logo.png");
-      imgLogo.resize(150, 600);
     }
 
     public void loadPatientImages(){
@@ -82,9 +76,6 @@ public class MySketch1 extends PApplet {
         imgPatientNumber = loadImage("/Images/pleaseEnterPatientNumber.png");
         imgPatientNumber.resize(width, height);
 
-        // Insert patient number
-        imgLoadingScreen = loadImage("/Images/LoadingScreen.png");
-        imgLoadingScreen.resize(width, height);
     }
 
     public void patientNumber(){
@@ -129,14 +120,23 @@ public class MySketch1 extends PApplet {
           "White", "Harris"
       };
       
-      int[] patientsNum = new int[quantity];
+      if(reprint == 0){
+        for (int i = 0; i < quantity; i++){
+            patientsNum[i] = random.nextInt(1000);
+        }
+        reprint+=1;
+      }
+      
 
       for (int amount = 0; amount < quantity; amount++){
-        patientsNum[amount] = random.nextInt(1000);
+        
         fill(15, 47, 118);
         textSize(16);
         text(("First Name: "+firstNames[amount]+"\t\t Last Name: "+lastNames[amount]+"\t\t Patient Number: "+patientsNum[amount]).toString(), 500, 20*(amount));
         System.out.println(("First Name: "+ firstNames[amount]+"\t Last Name: "+lastNames[amount]+"\t Patient Number: "+patientsNum[amount]).toString());
+        textSize(18);
+        text(("First Name: "+firstNames[amount]+"\t\t Last Name: "+lastNames[amount]+"\t\t Patient Number: "+patientsNum[amount]).toString(), 500, 30+(28*(amount)));
+        //System.out.println(("First Name: "+firstNames[amount]+"\t Last Name: "+lastNames[amount]+"\t Patient Number: "+patientsNum[amount]).toString());
       }
     }
 
@@ -169,6 +169,9 @@ public class MySketch1 extends PApplet {
             userInput = ""; // Clear the input after setting the variable
           }
         }
+      }
+      if (keyCode == ENTER && !userInput.isEmpty()){
+        blnMoveToTutorialPage = true;
       }
     }
     
