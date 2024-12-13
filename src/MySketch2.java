@@ -20,9 +20,11 @@ public class MySketch2 extends PApplet {
     int reprint = 0;
 
     int amount = 0;
+    int number;
     boolean showname = true;
     boolean checkbutton = true;
     boolean showPatient = true;
+    boolean patientscreen = false;
     int[] patientsNum = new int[20];
     String[] firstNames = {
         "John", "Emily", "Michael", "Sophia", "David", "Olivia", 
@@ -32,7 +34,7 @@ public class MySketch2 extends PApplet {
     };
 
     String[] lastNames = {
-        "Smith", "Johnson", "Brown", "Williams", "Jones", "Garcia", 
+        "Smith", "Johnson", "Ponze", "Williams", "Jones", "Garcia", 
         "Miller", "Davis", "Martinez", "Hernandez", "Lopez", "Gonzalez", 
         "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", 
         "White", "Harris"
@@ -71,6 +73,9 @@ public class MySketch2 extends PApplet {
             welcomePage();
         }
         
+        if(patientscreen){
+          patientInfo(number);
+        }
     }
       
     public static void main(String[] args) {
@@ -149,12 +154,10 @@ public class MySketch2 extends PApplet {
     }
 
     public void patientInfo(int position){
-      String namePatient = firstNames[position-1] + lastNames[position-1];
-      for (int i =0; i<800; i++){
-        fill(255,0,0);
-        textSize(40);
-        text(namePatient, 450, 100);
-      }
+      String namePatient = firstNames[position-1] +" "+ lastNames[position-1];
+      fill(13, 60, 117);
+      textSize(40);
+      text(namePatient, 450, 60);
     }
 
     public void mouseClicked(){
@@ -172,17 +175,17 @@ public class MySketch2 extends PApplet {
           if (mouseX > 450 && mouseX < 475 && mouseY > 20 && mouseY < 565){
             
             double position = 545.0/20.0;
-            int number = 0;
             for(int i = 0; i < 20; i++){
               if(mouseY < 20+(i*position)){
                 number = i;
                 break;
               }
             }
-            patientInfo(number);
+            
             showPatient = false;
             checkbutton = false;
-            
+            patientscreen = true;
+
           }
         }
     }
