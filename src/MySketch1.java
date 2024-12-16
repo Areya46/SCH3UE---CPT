@@ -12,6 +12,13 @@ public class MySketch1 extends PApplet {
 
     // General Variables
     PImage imgPhoneOutline;
+    PImage imgNextButton;
+    PImage imgBackButton;
+    PImage imgHowToPage;
+    boolean blnShowNextButton;
+    boolean blnShowBackButton;
+    boolean blnShowHowTo;
+    boolean blnInsertPatientNumber;
 
     // WelcomePage Variables
     PImage imgWelcomePage;
@@ -75,18 +82,28 @@ public class MySketch1 extends PApplet {
         // Draw outline of phone for patient screen 
         image(imgPhoneOutline, 14,5);
 
-
         if (showPatient){
           patientGeneration();
         }
-        // USER PART OF THE SCREEN
+
+        // Patient Screen 
         if (blnGetStartedselected){
             patientNumber();
         }
         if (!blnGetStartedselected){
             welcomePage();
         }
-       
+        if (blnShowNextButton){
+          image(imgNextButton, 240,525);
+          if (blnGetStartedselected){
+            howToPage();
+          }
+        }
+
+        if (blnShowBackButton){
+          image(imgBackButton, 45, 525);
+        }
+
     }
      
     public static void main(String[] args) {
@@ -96,8 +113,6 @@ public class MySketch1 extends PApplet {
 
     public void welcomePage(){
         image(imgWelcomePage, 25, 30);
-
-
     }
 
 
@@ -105,7 +120,7 @@ public class MySketch1 extends PApplet {
 
         // Load Picture of Phone
         imgPhoneOutline = loadImage("/Images/Phone outline.png");
-        imgPhoneOutline.resize(width/3 - 5, 580);
+        imgPhoneOutline.resize(width/3 - 5, 575);
 
         // Welcome page
         imgWelcomePage = loadImage("/Images/WelcomePage.png");
@@ -116,12 +131,24 @@ public class MySketch1 extends PApplet {
         imgPatientNumber = loadImage("/Images/pleaseEnterPatientNumber.png");
         imgPatientNumber.resize(width, height);
 
+        // Next Button 
+        imgNextButton = loadImage("/Images/Next Button.png");
+        imgNextButton.resize(300, 500);
+
+        // Back and Next button 
+        imgBackButton = loadImage("Images/backButton.png");
+        imgBackButton.resize(300, 500);
+
+        // How to page text
+        imgHowToPage = loadImage("Images/HowToPage.png");
+        imgHowToPage.resize(340, 550);
+
     }
 
 
     public void patientNumber(){
 
-        image(imgPatientNumber, 5, 20);
+        image(imgPatientNumber, 10, 20);
         // Draw the text box
         fill(255, 203, 79);
         stroke(255, 149, 0);
@@ -143,11 +170,11 @@ public class MySketch1 extends PApplet {
         textSize(30);
         int index = Arrays.stream(patientsNum).boxed().toList().indexOf(currentPatient);
         if (index >= 0){
-          text(("Nice to meet you " + firstNames[index]+ "!"), 50, 450);
-          text((firstNames[index]), 50, 480);
+          text(("Nice to meet you"), 50, 450);
+          text((firstNames[index] + "!"), 50, 480);
+          blnShowNextButton = true;
+          blnShowHowTo = true;
         }
-       
-
 
     }
 
@@ -155,9 +182,6 @@ public class MySketch1 extends PApplet {
     public void patientGeneration(){
       int quantity = 20;
       Random random = new Random();
- 
-
-
      
       if(reprint == 0){
         for (int i = 0; i < quantity; i++){
@@ -191,11 +215,16 @@ public class MySketch1 extends PApplet {
     }
 
 
+    public void howToPage(){
+      image(imgHowToPage, 20, 30);
+    }
+
     public void mouseClicked(){
+
+      // Was Get started selected?
         if (mouseX >= 100 && mouseX <= 320 && mouseY >= 330 && mouseY <= 380){
             blnGetStartedselected = true;
         }
-
 
         if (mouseX > 50 && mouseX < 250 && mouseY > 150 && mouseY < 210) {
           isTyping = true;
@@ -225,7 +254,15 @@ public class MySketch1 extends PApplet {
             }
           }
         }
-    }
+        
+        // Was next selcted?
+        if (mouseX >= 240 && mouseX <= (240 + 125) && mouseY >= 525 && mouseY <= (525 + 30)){
+          if (showPatient){
+            showPatient = false;
+          }
+        }
+    
+      }
 
 
     public void mouseDragged(){}
