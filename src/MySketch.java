@@ -7,9 +7,6 @@ import java.util.Arrays;
 public class MySketch extends PApplet {
 
     Random myRandom = new Random();
-    
-    // General Variables
-    PImage imgPhoneOutline;
 
     // WelcomePage Variables
     PImage imgWelcomePage;
@@ -43,6 +40,76 @@ public class MySketch extends PApplet {
         "White", "Harris"
     };
     
+
+        // Symptom details for each patient
+    String[] symptomsList = {
+      "Severe, unilateral cephalalgia for 12 hours\nPulsating quality localized to the left temporal region\nAssociated with photophobia and nausea\nMild distress noted during examination\nBlood pressure elevated at 148/92",
+      "Severe unilateral orbital pain, reported as 'stabbing'\nEpisodic attacks lasting 1–2 hours, recurring for 3 days\nIpsilateral lacrimation and nasal congestion on the right side",
+      "Persistent, bilateral frontal-occipital cephalalgia\nDescribed as 'tightness' or 'pressure' sensation\nNo associated nausea or visual disturbances\nReports recent stress and inadequate sleep",
+      "Dull, constant frontal headache for 3 days\nPain worsens with bending forward or sudden head movements\nCongestion and purulent nasal discharge\nTenderness over the frontal and maxillary sinuses",
+      "Squeezing retrosternal chest discomfort during exertion\nPain relieved with rest; lasting ~5 minutes\nBlood pressure mildly elevated at 140/88\nECG shows slight ST-segment depression",
+      "Intense retrosternal chest pain radiating to left arm\nPersistent for 30 minutes, unrelieved by rest\nAssociated diaphoresis and nausea\nECG shows ST-elevation; troponin elevated",
+      "Sharp, retrosternal chest pain, worsens with inspiration and lying flat\nPain improves when leaning forward\nMild fever at 100.5°F\nPericardial friction rub noted on auscultation",
+      "Sharp, localized chest pain exacerbated by palpation\nPain worsened with deep inspiration and movement\nLocalized tenderness over the costosternal joint",
+      "Acute, sharp chest pain exacerbated by deep breathing or coughing\nRecent history of URI\nChest X-ray indicates mild pleural effusion",
+      "Burning epigastric pain, worse after eating\nReports nausea and bloating\nHistory of consuming spicy foods\nAbdominal exam shows mild tenderness",
+      "Severe, constant epigastric pain radiating to the back\nWorsened after high-fat meal consumption\nAssociated nausea and vomiting\nElevated lipase and amylase levels",
+      "Acute periumbilical pain migrating to RLQ\nFever of 101°F\nPositive McBurney's point tenderness and rebound pain\nElevated WBC count",
+      "Gnawing epigastric pain, worse at night\nReports intermittent nausea\nHistory of NSAID use\nPositive stool occult blood test",
+      "Acute RUQ abdominal pain radiating to the right shoulder\nReports nausea and vomiting after consuming fatty meals\nPositive Murphy's sign\nLow-grade fever at 100.2°F",
+      "Swelling and ecchymosis around lateral malleolus\nSharp pain exacerbated by weight-bearing\nPositive anterior drawer test\nNo fractures on X-ray",
+      "Severe wrist pain following fall on outstretched hand\nVisible deformity and swelling\nX-ray confirms distal radius fracture",
+      "Unilateral swelling and pain in the left calf for 2 days\nPain described as 'throbbing' and worsened with standing or walking\nCalf tenderness and erythema noted",
+      "Reports polyuria, polydipsia, and fatigue for 2 days\nBlurred vision and headache noted\nDry mucous membranes; patient appears dehydrated\nCapillary blood glucose elevated at 430 mg/dL",
+      "Witnessed tonic-clonic seizure lasting 2 minutes\nPostictal confusion and drowsiness reported\nPatient experienced tongue biting and urinary incontinence"
+    };
+
+    // General categories for each patient
+    String[] categoriesList = {
+      "Head Pain", // Patient 1
+      "Head Pain", // Patient 2
+      "Head Pain", // Patient 3
+      "Head Pain", // Patient 15
+      "Chest Pain", // Patient 4
+      "Chest Pain", // Patient 5
+      "Chest Pain", // Patient 16
+      "Chest Pain", // Patient 6
+      "Chest Pain", // Patient 7
+      "Stomach Pain", // Patient 8
+      "Stomach Pain", // Patient 10
+      "Stomach Pain", // Patient 9
+      "Stomach Pain", // Patient 11
+      "Stomach Pain", // Patient 17
+      "Limb Pain", // Patient 13
+      "Limb Pain", // Patient 14
+      "Limb Pain", // Patient 18
+      "Other", // Patient 19 (Hyperglycemia)
+      "Other"  // Patient 20 (Seizure)
+    };
+
+    // Likely conditions for each patient
+    String[] conditionsList = {
+      "Migraine", // Patient 1
+      "Cluster Headache", // Patient 2
+      "Tension Headache", // Patient 3
+      "Sinus Headache", // Patient 15
+      "Stable Angina", // Patient 4
+      "STEMI", // Patient 5
+      "Pericarditis", // Patient 16
+      "Costochondritis", // Patient 6
+      "Pleuritic Pain", // Patient 7
+      "Gastritis", // Patient 8
+      "Pancreatitis", // Patient 10
+      "Appendicitis", // Patient 9
+      "Peptic Ulcer", // Patient 11
+      "Cholecystitis", // Patient 17
+      "Ankle Sprain", // Patient 13
+      "Distal Radius Fracture", // Patient 14
+      "Deep Vein Thrombosis (DVT)", // Patient 18
+      "Hyperglycemia (Diabetic Crisis)", // Patient 19
+      "First-Time Seizure" // Patient 20
+    };
+
     //Set Up the screen size
 
     public void settings() {
@@ -59,9 +126,6 @@ public class MySketch extends PApplet {
         float division = width / parseFloat(3);
 
         background(232, 237, 250);
-
-        // Draw outline of phone for patient screen 
-        image(imgPhoneOutline, 14,5);
 
         // Draw the vertical line dividing the two sides of the screen
         stroke(106, 133, 166);
@@ -95,11 +159,6 @@ public class MySketch extends PApplet {
 
     public void loadPatientImages(){
 
-                
-        // Load Picture of Phone
-        imgPhoneOutline = loadImage("/Images/Phone outline.png");
-        imgPhoneOutline.resize(width/3 - 5, 580);            
-
         // Welcome page 
         imgWelcomePage = loadImage("/Images/WelcomePage.png");
         imgWelcomePage.resize(350, 515);
@@ -113,7 +172,7 @@ public class MySketch extends PApplet {
     public void patientNumber(){
         // Text saying to enter patient number below
 
-        image(imgPatientNumber, 5, 20);
+        image(imgPatientNumber, 0, 20);
         // Draw the text box
         fill(255, 203, 79);
         stroke(255, 149, 0);
@@ -169,6 +228,37 @@ public class MySketch extends PApplet {
       fill(13, 60, 117);
       textSize(40);
       text(namePatient, 450, 60);
+
+      fill(13, 60, 117);
+      textSize(40);
+      text("<", 1150, 50);
+
+      fill(39, 60, 115);
+      textSize(25);
+      text("Category: ", 450, 110);
+
+      fill(71, 87, 128);
+      textSize(20);
+      text(categoriesList[position-1],650, 110);
+
+      fill(39, 60, 115);
+      textSize(25);
+      text("Likely Condition: ", 450, 155);
+
+      fill(71, 87, 128);
+      textSize(20);
+      text(conditionsList[position-1],650, 155);
+
+      fill(39, 60, 115);
+      textSize(25);
+      text("Symptoms: ", 450, 200);
+
+      fill(71, 87, 128);
+      textSize(18);
+      text(symptomsList[position-1],450, 230);
+
+
+
     }
 
     public void mouseClicked(){
@@ -180,6 +270,14 @@ public class MySketch extends PApplet {
           isTyping = true;
         } else {
           isTyping = false;
+        }
+
+        if (patientscreen){
+          if (mouseX > 1100 && mouseX < 1200 && mouseY > 20 && mouseY < 60) {
+            patientscreen = false;
+            showPatient = true;
+            checkbutton = true;
+          }
         }
 
         if (checkbutton){
