@@ -121,6 +121,51 @@ public class MySketch extends PApplet {
       "First-Time Seizure" // Patient 20
     };
 
+String[][] easySymptomsList = {
+    {"Throbbing headache", "Nausea", "Sensitivity to light", "Unilateral pain"}, // Migraine
+    {"Sharp orbital pain", "Watery eye", "Nasal congestion", "Recurrent attacks"}, // Cluster Headache
+    {"Dull, tight headache", "No nausea", "Bilateral pressure"}, // Tension Headache
+    {"Frontal headache", "Nasal congestion", "Tenderness over sinuses"}, // Sinus Headache
+    {"Chest tightness during exertion", "Relieved by rest", "Short duration"}, // Stable Angina
+    {"Chest pain radiating to arm", "Sweating", "Nausea", "Prolonged duration"}, // STEMI
+    {"Positional chest pain", "Relieved by leaning forward", "Fever"}, // Pericarditis
+    {"Localized chest pain", "Worsened with palpation", "Worsened by breathing"}, // Costochondritis
+    {"Sharp chest pain with breathing", "History of URI", "Mild fever"}, // Pleuritic Pain
+    {"Burning stomach pain", "Worse after eating", "Nausea"}, // Gastritis
+    {"Severe epigastric pain", "Radiates to back", "Worsened after fatty meal"}, // Pancreatitis
+    {"Sharp RLQ pain", "Fever", "Difficulty moving", "Nausea"}, // Appendicitis
+    {"Gnawing stomach pain", "Worse at night", "Blood in stool"}, // Peptic Ulcer
+    {"RUQ pain", "Shoulder pain", "Nausea after fatty meal", "Murphy's sign"}, // Cholecystitis
+    {"Swollen ankle", "Sharp pain", "Difficulty walking"}, // Ankle Sprain
+    {"Deformed wrist", "Severe pain", "Swelling after fall"}, // Distal Radius Fracture
+    {"Swollen calf", "Throbbing pain", "Worsened by standing"}, // DVT
+    {"Excessive thirst", "Frequent urination", "Fatigue", "High blood sugar"}, // Hyperglycemia
+    {"Seizure", "Postictal confusion", "Tongue biting", "Incontinence"} // First-Time Seizure
+};
+
+
+    int[][] symptomSeverities = {
+      {8, 6, 7, 7}, // Migraine
+      {9, 4, 5, 8}, // Cluster Headache
+      {5, 0, 4},    // Tension Headache
+      {6, 7, 8},    // Sinus Headache
+      {6, 2, 4},    // Stable Angina
+      {9, 8, 7, 10}, // STEMI
+      {7, 4, 5},    // Pericarditis
+      {6, 8, 7},    // Costochondritis
+      {8, 5, 4},    // Pleuritic Pain
+      {7, 6, 5},    // Gastritis
+      {9, 8, 7},    // Pancreatitis
+      {8, 6, 7, 5}, // Appendicitis
+      {6, 5, 7},    // Peptic Ulcer
+      {8, 7, 6, 8}, // Cholecystitis
+      {6, 7, 8},    // Ankle Sprain
+      {8, 9, 7},    // Distal Radius Fracture
+      {7, 8, 6},    // DVT
+      {6, 5, 7, 9}, // Hyperglycemia
+      {9, 6, 8, 5}  // First-Time Seizure
+    };
+
     //Set Up the screen size
 
     public void settings() {
@@ -304,12 +349,22 @@ public class MySketch extends PApplet {
 
       fill(39, 60, 115);
       textSize(25);
-      text("Symptoms: ", 450, 200);
+      text("Observed Symptoms: ", 450, 200);
 
       fill(71, 87, 128);
       textSize(18);
       text(symptomsList[position-1],450, 230);
 
+
+      fill(39, 60, 115);
+      textSize(25);
+      text("Patient Reported Symptoms: ", 450, 350);
+
+      for (int i = 0; i < easySymptomsList[position-1].length; i++){
+        fill(71, 87, 128);
+        textSize(18);
+        text((easySymptomsList[position-1][i] +"     \t\t"+ symptomSeverities[position-1][i]),450, 380+(20*i));
+      }
 
 
     }

@@ -251,11 +251,11 @@ public class MySketch2 extends PApplet {
 
       fill(39, 60, 115);
       textSize(25);
-      text("Symptoms: ", 450, 200);
+      text("Symptoms: ", 450, 300);
 
       fill(71, 87, 128);
       textSize(18);
-      text(symptomsList[position-1],450, 230);
+      text(symptomsList[position-1],650, 330);
 
 
 
