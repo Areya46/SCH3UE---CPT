@@ -19,6 +19,7 @@ public class MySketch1 extends PApplet {
     boolean blnShowBackButton;
     boolean blnShowHowTo;
     boolean blnInsertPatientNumber;
+    boolean blnPatientEnteredNumber;
 
     // WelcomePage Variables
     PImage imgWelcomePage;
@@ -87,15 +88,17 @@ public class MySketch1 extends PApplet {
         }
 
         // Patient Screen 
-        if (blnGetStartedselected){
+        if (blnGetStartedselected && !blnPatientEnteredNumber){
             patientNumber();
         }
+
         if (!blnGetStartedselected){
             welcomePage();
         }
+
         if (blnShowNextButton){
           image(imgNextButton, 240,525);
-          if (blnGetStartedselected){
+          if (blnPatientEnteredNumber){
             howToPage();
           }
         }
@@ -170,6 +173,7 @@ public class MySketch1 extends PApplet {
         textSize(30);
         int index = Arrays.stream(patientsNum).boxed().toList().indexOf(currentPatient);
         if (index >= 0){
+          blnPatientEnteredNumber = true;
           text(("Nice to meet you"), 50, 450);
           text((firstNames[index] + "!"), 50, 480);
           blnShowNextButton = true;
@@ -216,7 +220,7 @@ public class MySketch1 extends PApplet {
 
 
     public void howToPage(){
-      image(imgHowToPage, 20, 30);
+      image(imgHowToPage, 30, 30);
     }
 
     public void mouseClicked(){
