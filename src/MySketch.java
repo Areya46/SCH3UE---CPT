@@ -49,6 +49,19 @@ public class MySketch extends PApplet {
     int severitySymptom2 = 45 + 155;
     int severitySymptom3 = 45 + 155;
     int severitySymptom4= 45 + 155; 
+    int oldSeveritySymptom1;
+    int oldSeveritySymptom2;
+    int oldSeveritySymptom3;
+    int oldSeveritySymptom4;
+    int changeInSeverity1;
+    int changeInSeverity2;
+    int changeInSeverity3;
+    int changeInSeverity4;
+    int difference1;
+    int difference2;
+    int difference3;
+    int difference4;
+     
 
     // WelcomePage Variables
     PImage imgWelcomePage;
@@ -564,14 +577,19 @@ public class MySketch extends PApplet {
         }
     }
 
-    /* */
     public void mouseDragged(){
 
       if (blnUpdateSymptom && mouseX >= line0 && mouseX <= line10){
         // Severity of symptom 1
         if (mouseX >= severitySymptom1 - 10 && mouseX <= severitySymptom1 + 10 && mouseY >= (140+20) - 10 && mouseY <= (140+20) + 10){
+            oldSeveritySymptom1 = severitySymptom1;
             severitySymptom1 = mouseX;
-            // WRITE CODE TO SNAP IT INTO A NUMBERED POSITION, FIND THE DFFERENCE OF THAT, AND THEN ADD IT TO THE SEVERITY
+            changeInSeverity1 = severitySymptom1 - oldSeveritySymptom1;
+            // when found severity, symptomSeverities[current patient index][which slider it is] += difference
+            if (changeInSeverity1 <= 25){
+              System.out.println("oh ya");
+            }
+            
         }
         //  Severity of symptom 2
         if (mouseX >= severitySymptom2 - 10 && mouseX <= severitySymptom2 + 10 && mouseY >= (240) - 10 && mouseY <= (240) + 10){
@@ -581,7 +599,7 @@ public class MySketch extends PApplet {
         if (mouseX >= severitySymptom3 - 10 && mouseX <= severitySymptom3 + 10 && mouseY >= (320) - 10 && mouseY <= (320) + 10){
           severitySymptom3 = mouseX;
         } 
-        //  Severity of symptom 3
+        //  Severity of symptom 4
         if (mouseX >= severitySymptom4 - 10 && mouseX <= severitySymptom4+ 10 && mouseY >= (320) - 10 && mouseY <= (400) + 10){
           severitySymptom3 = mouseX;
         } 
