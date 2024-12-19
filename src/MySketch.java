@@ -19,6 +19,20 @@ public class MySketch extends PApplet {
     boolean blnInsertPatientNumber;
     boolean blnPatientEnteredNumber;
     boolean blnSymptomsPage1;
+    boolean blnUpdateSymptom;
+    double position = 545.0/20.0;
+    int anotherNumber;
+    int circleX0 = 45;
+    int circleX1 = 45 + 35;
+    int circleX2 = 45 + 65;
+    int circleX3 = 45 + 95;
+    int circleX4 = 45 + 125;
+    int circleX5 = 45 + 155;
+    int circleX6 = 45 + 185;
+    int circleX7 = 45 + 215;
+    int circleX8 = 45 + 245;
+    int circleX9 = 45 + 275;
+    int circleX10 = 45 + 305;
 
     // WelcomePage Variables
     PImage imgWelcomePage;
@@ -51,7 +65,6 @@ public class MySketch extends PApplet {
         "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", 
         "White", "Harris"
     };
-    
 
         // Symptom details for each patient
     String[] symptomsList = {
@@ -219,8 +232,9 @@ String[][] easySymptomsList = {
           }
         }
 
-        if (blnSymptomsPage1){
-
+        if (blnUpdateSymptom){
+          updateSymptoms(currentPatient);
+          blnShowNextButton = false;
         }
 
         if (blnShowBackButton){
@@ -330,7 +344,7 @@ String[][] easySymptomsList = {
     public void howToPage(){
       image(imgHowToPage, 30, 75);
     }
-
+    
     public void patientInfo(int position){
       String namePatient = firstNames[position-1] +" "+ lastNames[position-1];
       fill(13, 60, 117);
@@ -368,20 +382,73 @@ String[][] easySymptomsList = {
 
       fill(39, 60, 115);
       textSize(25);
-      text("Patient Reported Symptoms: ", 450, 350);
+      text("Patient Reported Symptoms: ", 450, 380);
 
       for (int i = 0; i < easySymptomsList[position-1].length; i++){
         fill(71, 87, 128);
         textSize(18);
-        text((easySymptomsList[position-1][i] +"     \t\t"+ symptomSeverities[position-1][i]),450, 380+(20*i));
+        text((easySymptomsList[position-1][i] +"     \t\t"+ symptomSeverities[position-1][i]),450, 400+(20*i));
       }
 
-
     }
+    
+    public void updateSymptoms(int patientNumber) {
+      int index = Arrays.stream(patientsNum).boxed().toList().indexOf(patientNumber);
+      if (index >= 0) {
+        
+        //String namePatient = firstNames[index] + " " + lastNames[index];
+          //fill(13, 60, 117);
+          //textSize(40);
+          //text("Patient: " + namePatient, 35, 60);
+          
+          fill(39, 60, 115);
+          textSize(25);
+          text("Symptoms: ", 40, 110);
+  
+          fill(71, 87, 128);
+          textSize(18);
+          int yvalue = 140;
+          int xvalue = 45;
+
+          for (String symptom : easySymptomsList[index]) {
+              //text("- " + symptom, 45, 100 + (easySymptomsList[index].length - 1) * 20); // Adjust position
+              text("- " + symptom, 45, yvalue);
+              text("__________________________________", xvalue, yvalue + 20);
+              text("|", 45, yvalue + 25);
+              text("0", circleX0, yvalue + 50);
+              text("|", 45 + 35, yvalue + 25);
+              text("1", circleX1, yvalue + 50);
+              text("|", 45 + 65, yvalue + 25);
+              text("2", circleX2, yvalue + 50);
+              text("|", 45 + 95, yvalue + 25);
+              text("3", circleX3, yvalue + 50);
+              text("|", 45 + 125, yvalue + 25);
+              text("4", circleX4, yvalue + 50);
+              text("|", 45 + 155, yvalue + 25);
+              text("5", circleX5, yvalue + 50);
+              text("|", 45 + 185, yvalue + 25);
+              text("6", circleX6, yvalue + 50);
+              text("|", 45 + 215, yvalue + 25);
+              text("7", circleX7, yvalue + 50);
+              text("|", 45 + 245, yvalue + 25);
+              text("8", circleX8, yvalue + 50);
+              text("|", 45 + 275, yvalue + 25);
+              text("9", circleX9, yvalue + 50);
+              text("|", 45 + 305, yvalue + 25);
+              text("10", circleX10, yvalue + 50);
+
+              // Patient 1
+              ellipse(45 + 155, yvalue + 20, 10, 10);
+
+              yvalue += 80;
+          }
+      } else {
+          text("Patient number not found.", 450, 60);
+      }
+
+  }
 
     public void symptomsPage1(){
-      // fill(13, 60, 117); textSize(40); text("", x, y)
-
       fill(13, 60, 117);
       textSize(30);
       text("Symptom Tracker", 40 + 30 ,70);
@@ -428,7 +495,6 @@ String[][] easySymptomsList = {
         if (checkbutton){
           if (mouseX > 450 && mouseX < 475 && mouseY > 20 && mouseY < 565){
             
-            double position = 545.0/20.0;
             for(int i = 0; i < 20; i++){
               if(mouseY < 20+(i*position)){
                 number = i;
@@ -455,6 +521,8 @@ String[][] easySymptomsList = {
         // Do they want to alter a pre-existing symtom?
         if (blnSymptomsPage1 && mouseX >= 35 && mouseX <= (width/3 - 100) && mouseY >= 90 && mouseY <= 90 + 35 ){
           System.out.println("THEY WANT TO UPDATE");
+          blnSymptomsPage1 = false;
+          blnUpdateSymptom = true;
         }
 
         if (blnSymptomsPage1 && mouseX >= 35 && mouseX <= (width/3 - 175) && mouseY >= 148 && mouseY <= 148 + 35){
@@ -462,7 +530,18 @@ String[][] easySymptomsList = {
         }
     }
 
-    public void mouseDragged(){}
+    /* */
+    public void mouseDragged(){
+
+      if (blnUpdateSymptom){
+        for (int i = 0; i <= 10; i++){
+          if (mouseY >= (45 + 20) - 5 && mouseY <= (45+20) + 5){
+            System.out.println("Haleliouah");
+          }
+        }  
+      }
+
+    }
     
     public void keyPressed(){
       if (isTyping) {
