@@ -18,6 +18,7 @@ public class MySketch extends PApplet {
     boolean blnShowHowTo;
     boolean blnInsertPatientNumber;
     boolean blnPatientEnteredNumber;
+    boolean blnSymptomsPage1;
 
     // WelcomePage Variables
     PImage imgWelcomePage;
@@ -164,8 +165,17 @@ public class MySketch extends PApplet {
         if (blnShowNextButton){
           image(imgNextButton, 240,525);
           if (blnPatientEnteredNumber){
-            howToPage();
+            if (blnShowHowTo){
+              howToPage();
+            }
           }
+          if(blnSymptomsPage1){
+            symptomsPage1();
+          }
+        }
+
+        if (blnSymptomsPage1){
+
         }
 
         if (blnShowBackButton){
@@ -273,7 +283,7 @@ public class MySketch extends PApplet {
     }
 
     public void howToPage(){
-      image(imgHowToPage, 30, 30);
+      image(imgHowToPage, 30, 75);
     }
 
     public void patientInfo(int position){
@@ -314,6 +324,33 @@ public class MySketch extends PApplet {
 
     }
 
+    public void symptomsPage1(){
+      // fill(13, 60, 117); textSize(40); text("", x, y)
+
+      fill(13, 60, 117);
+      textSize(30);
+      text("Symptom Tracker", 40 + 30 ,70);
+
+      // First heading 
+      fill(13,60, 117);
+      textSize(40);
+      text(">", 45, 110);
+
+      fill(13, 60, 117);
+      textSize(20);
+      text("Pre-existing Symptomes", 75, 108);
+
+      // Second Heading 
+      fill(13,60, 117);
+      textSize(40);
+      text(">", 45, 110 + 60);
+
+      fill(13, 60, 117);
+      textSize(20);
+      text("New symptom", 75, 168);   
+   
+    }
+
     public void mouseClicked(){
         if (mouseX >= 100 && mouseX <= 320 && mouseY >= 330 && mouseY <= 380){
             blnGetStartedselected = true;
@@ -349,6 +386,24 @@ public class MySketch extends PApplet {
             patientscreen = true;
 
           }
+        }
+
+        // Was next selcted?
+        if (mouseX >= 240 && mouseX <= (240 + 125) && mouseY >= 525 && mouseY <= (525 + 30)){
+          if (blnShowHowTo){
+            blnSymptomsPage1 = true;
+            blnShowHowTo = false;
+            System.out.println("oH yayayayy");
+          }
+        }
+
+        // Do they want to alter a pre-existing symtom?
+        if (blnSymptomsPage1 && mouseX >= 35 && mouseX <= (width/3 - 100) && mouseY >= 90 && mouseY <= 90 + 35 ){
+          System.out.println("THEY WANT TO UPDATE");
+        }
+
+        if (blnSymptomsPage1 && mouseX >= 35 && mouseX <= (width/3 - 175) && mouseY >= 148 && mouseY <= 148 + 35){
+          System.out.println("They ARE FEELING SOMTHING ELSE");
         }
     }
 

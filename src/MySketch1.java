@@ -220,7 +220,7 @@ public class MySketch1 extends PApplet {
 
 
     public void howToPage(){
-      image(imgHowToPage, 30, 30);
+      image(imgHowToPage, 30, 80);
     }
 
     public void mouseClicked(){
