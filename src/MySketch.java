@@ -22,6 +22,18 @@ public class MySketch extends PApplet {
     boolean blnUpdateSymptom;
     double position = 545.0/20.0;
     int anotherNumber;
+    int line0 = 45;
+    int line1 = 45 + 35;
+    int line2 = 45 + 65;
+    int line3 = 45 + 95;
+    int line4 = 45 + 125;
+    int line5 = 45 + 155;
+    int line6 = 45 + 185;
+    int line7 = 45 + 215;
+    int line8 = 45 + 245;
+    int line9 = 45 + 275;
+    int line10 = 45 + 305;
+
     int circleX0 = 45;
     int circleX1 = 45 + 35;
     int circleX2 = 45 + 65;
@@ -33,6 +45,10 @@ public class MySketch extends PApplet {
     int circleX8 = 45 + 245;
     int circleX9 = 45 + 275;
     int circleX10 = 45 + 305;
+    int severitySymptom1 = 45 + 155;
+    int severitySymptom2 = 45 + 155;
+    int severitySymptom3 = 45 + 155;
+    int severitySymptom4= 45 + 155; 
 
     // WelcomePage Variables
     PImage imgWelcomePage;
@@ -414,34 +430,48 @@ String[][] easySymptomsList = {
               //text("- " + symptom, 45, 100 + (easySymptomsList[index].length - 1) * 20); // Adjust position
               text("- " + symptom, 45, yvalue);
               text("__________________________________", xvalue, yvalue + 20);
-              text("|", 45, yvalue + 25);
+              text("|", line0, yvalue + 25);
               text("0", circleX0, yvalue + 50);
-              text("|", 45 + 35, yvalue + 25);
+              text("|", line1, yvalue + 25);
               text("1", circleX1, yvalue + 50);
-              text("|", 45 + 65, yvalue + 25);
+              text("|", line2, yvalue + 25);
               text("2", circleX2, yvalue + 50);
-              text("|", 45 + 95, yvalue + 25);
+              text("|", line3, yvalue + 25);
               text("3", circleX3, yvalue + 50);
-              text("|", 45 + 125, yvalue + 25);
+              text("|", line4, yvalue + 25);
               text("4", circleX4, yvalue + 50);
-              text("|", 45 + 155, yvalue + 25);
+              text("|", line5, yvalue + 25);
               text("5", circleX5, yvalue + 50);
-              text("|", 45 + 185, yvalue + 25);
+              text("|", line6, yvalue + 25);
               text("6", circleX6, yvalue + 50);
-              text("|", 45 + 215, yvalue + 25);
+              text("|", line7, yvalue + 25);
               text("7", circleX7, yvalue + 50);
-              text("|", 45 + 245, yvalue + 25);
+              text("|", line8, yvalue + 25);
               text("8", circleX8, yvalue + 50);
-              text("|", 45 + 275, yvalue + 25);
+              text("|", line9, yvalue + 25);
               text("9", circleX9, yvalue + 50);
-              text("|", 45 + 305, yvalue + 25);
+              text("|", line10, yvalue + 25);
               text("10", circleX10, yvalue + 50);
 
               // Patient 1
-              ellipse(45 + 155, yvalue + 20, 10, 10);
+              //ellipse(45 + 155, yvalue + 20, 10, 10);
 
               yvalue += 80;
           }
+
+          // Patient circle 1 
+          ellipse(severitySymptom1, 140 + 20, 10, 10);
+
+          // Patient circle 2
+          ellipse(severitySymptom2, 240, 10, 10);
+
+          // Sverity circle 3 
+          ellipse(severitySymptom3, 320, 10, 10);
+
+          // Severity circle 4
+          ellipse(severitySymptom4, 400, 10, 10);
+
+
       } else {
           text("Patient number not found.", 450, 60);
       }
@@ -533,15 +563,26 @@ String[][] easySymptomsList = {
     /* */
     public void mouseDragged(){
 
-      if (blnUpdateSymptom){
-        for (int i = 0; i <= 10; i++){
-          if (mouseY >= (45 + 20) - 5 && mouseY <= (45+20) + 5){
-            System.out.println("Haleliouah");
-          }
+      if (blnUpdateSymptom && mouseX >= line1 && mouseX <= line10){
+        // Severity of symptom 1
+        if (mouseX >= severitySymptom1 - 3 && mouseX <= severitySymptom1 + 3 && mouseY >= (140+20) - 5 && mouseY <= (140+20) + 5){
+            severitySymptom1 = mouseX;
+            // WRITE CODE TO SNAP IT INTO A NUMBERED POSITION, FIND THE DFFERENCE OF THAT, AND THEN ADD IT TO THE SEVERITY
+        }
+        //  Severity of symptom 2
+        if (mouseX >= severitySymptom2 - 3 && mouseX <= severitySymptom2 + 3 && mouseY >= (240) -3 && mouseY <= (140+20) + 3){
+          severitySymptom2 = mouseY;
+        }
+        // Severity of symptom 3
+        if (mouseX >= severitySymptom3 - 3 && mouseX <= severitySymptom3 + 3 && mouseY >= (320) -3 && mouseY <= (140+20) + 3){
+          severitySymptom3 = mouseY;
+        }
+        // Severity of symptom 4
+        if (mouseX >= severitySymptom4 - 3 && mouseX <= severitySymptom4 + 3 && mouseY >= (400) -3 && mouseY <= (140+20) + 3){
+          severitySymptom2 = mouseY;
+        }
         }  
       }
-
-    }
     
     public void keyPressed(){
       if (isTyping) {
