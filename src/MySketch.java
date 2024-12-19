@@ -459,6 +459,10 @@ String[][] easySymptomsList = {
               yvalue += 80;
           }
 
+          for (String symptom : easySymptomsList[index]){
+
+          }
+
           // Patient circle 1 
           ellipse(severitySymptom1, 140 + 20, 10, 10);
 
@@ -563,24 +567,24 @@ String[][] easySymptomsList = {
     /* */
     public void mouseDragged(){
 
-      if (blnUpdateSymptom && mouseX >= line1 && mouseX <= line10){
+      if (blnUpdateSymptom && mouseX >= line0 && mouseX <= line10){
         // Severity of symptom 1
-        if (mouseX >= severitySymptom1 - 3 && mouseX <= severitySymptom1 + 3 && mouseY >= (140+20) - 5 && mouseY <= (140+20) + 5){
+        if (mouseX >= severitySymptom1 - 10 && mouseX <= severitySymptom1 + 10 && mouseY >= (140+20) - 10 && mouseY <= (140+20) + 10){
             severitySymptom1 = mouseX;
             // WRITE CODE TO SNAP IT INTO A NUMBERED POSITION, FIND THE DFFERENCE OF THAT, AND THEN ADD IT TO THE SEVERITY
         }
         //  Severity of symptom 2
-        if (mouseX >= severitySymptom2 - 3 && mouseX <= severitySymptom2 + 3 && mouseY >= (240) -3 && mouseY <= (140+20) + 3){
-          severitySymptom2 = mouseY;
+        if (mouseX >= severitySymptom2 - 10 && mouseX <= severitySymptom2 + 10 && mouseY >= (240) - 10 && mouseY <= (240) + 10){
+          severitySymptom2 = mouseX;
         }
-        // Severity of symptom 3
-        if (mouseX >= severitySymptom3 - 3 && mouseX <= severitySymptom3 + 3 && mouseY >= (320) -3 && mouseY <= (140+20) + 3){
-          severitySymptom3 = mouseY;
-        }
-        // Severity of symptom 4
-        if (mouseX >= severitySymptom4 - 3 && mouseX <= severitySymptom4 + 3 && mouseY >= (400) -3 && mouseY <= (140+20) + 3){
-          severitySymptom2 = mouseY;
-        }
+        //  Severity of symptom 3
+        if (mouseX >= severitySymptom3 - 10 && mouseX <= severitySymptom3 + 10 && mouseY >= (320) - 10 && mouseY <= (320) + 10){
+          severitySymptom3 = mouseX;
+        } 
+        //  Severity of symptom 3
+        if (mouseX >= severitySymptom4 - 10 && mouseX <= severitySymptom4+ 10 && mouseY >= (320) - 10 && mouseY <= (400) + 10){
+          severitySymptom3 = mouseX;
+        } 
         }  
       }
     
