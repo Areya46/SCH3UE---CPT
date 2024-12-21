@@ -49,18 +49,18 @@ public class MySketch extends PApplet {
     int severitySymptom2 = 45 + 155;
     int severitySymptom3 = 45 + 155;
     int severitySymptom4= 45 + 155; 
-    int oldSeveritySymptom1;
-    int oldSeveritySymptom2;
-    int oldSeveritySymptom3;
-    int oldSeveritySymptom4;
-    int changeInSeverity1;
-    int changeInSeverity2;
-    int changeInSeverity3;
-    int changeInSeverity4;
-    int difference1;
-    int difference2;
-    int difference3;
-    int difference4;
+    double oldSeveritySymptom1;
+    double oldSeveritySymptom2;
+    double oldSeveritySymptom3;
+    double oldSeveritySymptom4;
+    double changeInSeverity1;
+    double changeInSeverity2;
+    double changeInSeverity3;
+    double changeInSeverity4;
+    double difference1;
+    double difference2;
+    double difference3;
+    double difference4;
      
 
     // WelcomePage Variables
@@ -576,7 +576,8 @@ public class MySketch extends PApplet {
           System.out.println("They ARE FEELING SOMTHING ELSE");
         }
     }
-
+    
+    /*
     public void mouseDragged(){
 
       if (blnUpdateSymptom && mouseX >= line0 && mouseX <= line10){
@@ -586,8 +587,8 @@ public class MySketch extends PApplet {
             severitySymptom1 = mouseX;
             changeInSeverity1 = severitySymptom1 - oldSeveritySymptom1;
             // when found severity, symptomSeverities[current patient index][which slider it is] += difference
-            if (changeInSeverity1 <= 25){
-              System.out.println("oh ya");
+            for (int i = 0; i <=10; i++){
+              //if (changeInSeverity1 )
             }
             
         }
@@ -600,11 +601,71 @@ public class MySketch extends PApplet {
           severitySymptom3 = mouseX;
         } 
         //  Severity of symptom 4
-        if (mouseX >= severitySymptom4 - 10 && mouseX <= severitySymptom4+ 10 && mouseY >= (320) - 10 && mouseY <= (400) + 10){
-          severitySymptom3 = mouseX;
+        if (mouseX >= severitySymptom4 - 10 && mouseX <= severitySymptom4+ 10 && mouseY >= (400) - 10 && mouseY <= (400) + 10){
+          severitySymptom4 = mouseX;
         } 
         }  
       }
+      */
+
+      public void mouseDragged() {
+        if (blnUpdateSymptom && mouseX >= line0 && mouseX <= line10) {
+            // Severity of symptom 1
+            if (mouseX >= severitySymptom1 - 10 && mouseX <= severitySymptom1 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10) {
+                oldSeveritySymptom1 = severitySymptom1; // Save the previous position
+                System.out.println("old severity symptom" + oldSeveritySymptom1);
+                System.out.println("new severity symptom" + severitySymptom1);
+                severitySymptom1 = mouseX; // Update the new position
+                
+                // Calculate the difference
+                double previousValue1 = (oldSeveritySymptom1 - line0) / 20; // Convert position to severity value
+                double currentValue1 = (severitySymptom1 - line0) / 20; // Convert new position to severity value
+                //double change1 = currentValue1 - previousValue1;
+                double change1 = previousValue1 - currentValue1;
+                System.out.println("Change in severity for symptom 1: " + change1);
+            }
+    
+            // Severity of symptom 2
+            if (mouseX >= severitySymptom2 - 10 && mouseX <= severitySymptom2 + 10 && mouseY >= (240) - 10 && mouseY <= (240) + 10) {
+                oldSeveritySymptom2 = severitySymptom2; // Save the previous position
+                severitySymptom2 = mouseX; // Update the new position
+                
+                // Calculate the difference
+                double previousValue2 = (oldSeveritySymptom2 - line0) / 20;
+                double currentValue2 = (severitySymptom2 - line0) / 20;
+                double change2 = currentValue2 - previousValue2;
+                
+                System.out.println("Change in severity for symptom 2: " + change2);
+            }
+    
+            // Severity of symptom 3
+            if (mouseX >= severitySymptom3 - 10 && mouseX <= severitySymptom3 + 10 && mouseY >= (320) - 10 && mouseY <= (320) + 10) {
+                oldSeveritySymptom3 = severitySymptom3;
+                severitySymptom3 = mouseX;
+    
+                // Calculate the difference
+                double previousValue3 = (oldSeveritySymptom3 - line0) / 20;
+                double currentValue3 = (severitySymptom3 - line0) / 20;
+                double change3 = currentValue3 - previousValue3;
+    
+                System.out.println("Change in severity for symptom 3: " + change3);
+            }
+    
+            // Severity of symptom 4
+            if (mouseX >= severitySymptom4 - 10 && mouseX <= severitySymptom4 + 10 && mouseY >= (400) - 10 && mouseY <= (400) + 10) {
+                oldSeveritySymptom4 = severitySymptom4;
+                severitySymptom4 = mouseX;
+    
+                // Calculate the difference
+                double previousValue4 = (oldSeveritySymptom4 - line0) / 20;
+                double currentValue4 = (severitySymptom4 - line0) / 20;
+                double change4 = currentValue4 - previousValue4;
+    
+                System.out.println("Change in severity for symptom 4: " + change4);
+            }
+        }
+    }
+    
     
     public void keyPressed(){
       if (isTyping) {
