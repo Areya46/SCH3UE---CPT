@@ -1,12 +1,14 @@
-import java.util.Scanner;
-import java.util.Random;
 import processing.core.PApplet;
 import processing.core.PImage;
-import java.util.Arrays;
+
+import java.util.*;
+
 
 public class MySketch extends PApplet {
 
+
     Random myRandom = new Random();
+
 
     // General Variables
     PImage imgPhoneOutline;
@@ -34,6 +36,7 @@ public class MySketch extends PApplet {
     int line9 = 45 + 275;
     int line10 = 45 + 305;
 
+
     int circleX0 = 45;
     int circleX1 = 45 + 35;
     int circleX2 = 45 + 65;
@@ -48,12 +51,22 @@ public class MySketch extends PApplet {
     int severitySymptom1 = 45 + 155;
     int severitySymptom2 = 45 + 155;
     int severitySymptom3 = 45 + 155;
-    int severitySymptom4= 45 + 155; 
+    int severitySymptom4= 45 + 155;
+    int oldSeveritySymptom1;
+    int oldSeveritySymptom2;
+    int oldSeveritySymptom3;
+    int oldSeveritySymptom4;
+    int changeInSeverity1;
+    int changeInSeverity2;
+    int changeInSeverity3;
+    int changeInSeverity4;
+
 
     // WelcomePage Variables
     PImage imgWelcomePage;
     PImage imgPatientNumber;
     boolean blnGetStartedselected;
+
 
     // Line where number will be enteredss
     String userInput = ""; // Variable to store the user input
@@ -61,26 +74,31 @@ public class MySketch extends PApplet {
     int currentPatient = 0; // Variable for the size of the list
     int reprint = 0;
 
+
     int amount = 0;
     int number;
     boolean showname = true;
     boolean checkbutton = true;
     boolean showPatient = true;
     boolean patientscreen = false;
+    boolean caluclating = true;
+    boolean waitlistscreen = false;
     int[] patientsNum = new int[20];
     String[] firstNames = {
-        "John", "Emily", "Michael", "Sophia", "David", "Olivia", 
-        "James", "Isabella", "Daniel", "Mia", "Ethan", "Ava", 
-        "Alexander", "Charlotte", "Benjamin", "Amelia", "Lucas", 
+        "John", "Emily", "Michael", "Sophia", "David", "Olivia",
+        "James", "Isabella", "Daniel", "Mia", "Ethan", "Ava",
+        "Alexander", "Charlotte", "Benjamin", "Amelia", "Lucas",
         "Harper", "Henry", "Ella"
     };
 
+
     String[] lastNames = {
-        "Smith", "Johnson", "Ponze", "Williams", "Jones", "Garcia", 
-        "Miller", "Davis", "Martinez", "Hernandez", "Lopez", "Gonzalez", 
-        "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", 
+        "Smith", "Johnson", "Ponze", "Williams", "Jones", "Garcia",
+        "Miller", "Davis", "Martinez", "Hernandez", "Lopez", "Gonzalez",
+        "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson",
         "White", "Harris"
     };
+
 
         // Symptom details for each patient
     String[] symptomsList = {
@@ -105,6 +123,7 @@ public class MySketch extends PApplet {
       "Witnessed tonic-clonic seizure lasting 2 minutes\nPostictal confusion and drowsiness reported\nPatient experienced tongue biting and urinary incontinence"
     };
 
+
     // General categories for each patient
     String[] categoriesList = {
       "Head Pain", // Patient 1
@@ -127,6 +146,7 @@ public class MySketch extends PApplet {
       "Other", // Patient 19 (Hyperglycemia)
       "Other"  // Patient 20 (Seizure)
     };
+
 
     // Likely conditions for each patient
     String[] conditionsList = {
@@ -151,6 +171,7 @@ public class MySketch extends PApplet {
       "First-Time Seizure" // Patient 20
     };
 
+
     String[][] easySymptomsList = {
       {"Throbbing headache", "Nausea", "Sensitivity to light", "Unilateral pain"}, // Migraine
       {"Sharp orbital pain", "Watery eye", "Nasal congestion", "Recurrent attacks"}, // Cluster Headache
@@ -172,7 +193,7 @@ public class MySketch extends PApplet {
       {"Excessive thirst", "Frequent urination", "Fatigue", "High blood sugar"}, // Hyperglycemia
       {"Seizure", "Postictal confusion", "Tongue biting", "Incontinence"} // First-Time Seizure
   };
-  
+ 
   int[][] symptomSeverities = {
       {8, 6, 7, 7}, // Migraine
       {9, 4, 5, 8}, // Cluster Headache
@@ -194,13 +215,18 @@ public class MySketch extends PApplet {
       {6, 5, 7, 9}, // Hyperglycemia
       {9, 6, 8, 5}  // First-Time Seizure
   };
-  
+ 
+  double[] AverageSeverities = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+  double[] CalculatedPainScale = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+  String[] WaitList = new String[20];
 
     //Set Up the screen size
+
 
     public void settings() {
         size(1250, 600);
     }
+
 
     public void setup() {
         //Set background colour
@@ -208,18 +234,23 @@ public class MySketch extends PApplet {
         loadPatientImages();
     }
 
+
     public void draw() {
         float division = width / parseFloat(3);
 
+
         background(232, 237, 250);
+
 
         // Draw the vertical line dividing the two sides of the screen
         stroke(106, 133, 166);
-        strokeWeight(5); 
-        line(division, 0, division, height); 
+        strokeWeight(5);
+        line(division, 0, division, height);
 
-         // Draw outline of phone for patient screen 
+
+         // Draw outline of phone for patient screen
          image(imgPhoneOutline, 14,5);
+
 
         if (showPatient){
           patientGeneration();
@@ -231,10 +262,15 @@ public class MySketch extends PApplet {
         if (!blnGetStartedselected){
             welcomePage();
         }
-        
+       
         if(patientscreen){
           patientInfo(number);
         }
+
+        if(waitlistscreen){
+          showWaitList();
+        }
+
 
         if (blnShowNextButton){
           image(imgNextButton, 240,525);
@@ -248,57 +284,100 @@ public class MySketch extends PApplet {
           }
         }
 
+
         if (blnUpdateSymptom){
           updateSymptoms(currentPatient);
           blnShowNextButton = false;
         }
 
+
         if (blnShowBackButton){
           image(imgBackButton, 45, 525);
         }
 
+
     }
-      
+     
     public static void main(String[] args) {
         PApplet.main("MySketch");
     }
+
 
     public void welcomePage(){
         image(imgWelcomePage, 25, 30);
 
     }
 
+    public void AverageSeverityCalc() {
+      // Loop through each patient (19 patients as in the provided list)
+      for (int i = 0; i < categoriesList.length; i++) {
+          // Calculate the average severity
+          AverageSeverities[i] = (symptomSeverities[i][0] + symptomSeverities[i][1] + symptomSeverities[i][2] + symptomSeverities[i][3]) / 4.0;
+  
+          // Trim the string to avoid hidden spaces and compare the category correctly
+          String category = categoriesList[i].trim(); // Trim any extra spaces
+  
+          // Set the CalculatedPainScale based on the conditions
+          if (category.equals("Chest Pain")) {
+              CalculatedPainScale[i] = AverageSeverities[i] + 2;
+          } else if (category.equals("Head Pain")) {
+              CalculatedPainScale[i] = AverageSeverities[i] + 1.5;
+          } else if (category.equals("Stomach Pain")) {
+              CalculatedPainScale[i] = AverageSeverities[i] + 1;
+          } else if (category.equals("Limb Pain")) {
+              CalculatedPainScale[i] = AverageSeverities[i] + 0.5;
+          } else if (category.equals("Other")) {
+              CalculatedPainScale[i] = AverageSeverities[i]; // No adjustment for "Other"
+          } else {
+              // For conditions that are not matched, you can leave CalculatedPainScale unchanged or handle accordingly
+              CalculatedPainScale[i] = AverageSeverities[i];
+          }
+      }
+  }  
+
+
+
     public void loadPatientImages(){
+
 
        // Load Picture of Phone
        imgPhoneOutline = loadImage("/Images/Phone outline.png");
        imgPhoneOutline.resize(width/3 - 5, 575);
+
 
        // Welcome page
        imgWelcomePage = loadImage("/Images/WelcomePage.png");
        imgWelcomePage.resize(345, 550);
 
 
+
+
        // Insert patient number
        imgPatientNumber = loadImage("/Images/pleaseEnterPatientNumber.png");
        imgPatientNumber.resize(width, height);
 
-       // Next Button 
+
+       // Next Button
        imgNextButton = loadImage("/Images/Next Button.png");
        imgNextButton.resize(300, 500);
 
-       // Back and Next button 
+
+       // Back and Next button
        imgBackButton = loadImage("Images/backButton.png");
        imgBackButton.resize(300, 500);
+
 
        // How to page text
        imgHowToPage = loadImage("Images/HowToPage.png");
        imgHowToPage.resize(340, 550);
 
+
     }
+
 
     public void patientNumber(){
         // Text saying to enter patient number below
+
 
         image(imgPatientNumber, 10, 20);
         // Draw the text box
@@ -306,14 +385,17 @@ public class MySketch extends PApplet {
         stroke(255, 149, 0);
         rect(50, 150, 200, 60); // Text box
 
+
         // Display the user's input
         fill(15, 47, 118);
         textSize(60);
         text(userInput, 60, 200);
 
+
         // Display the list size
         textSize(16);
         text("Patient Number: " + currentPatient, 50, 250);
+
 
         // Display the list size
         textSize(30);
@@ -325,18 +407,18 @@ public class MySketch extends PApplet {
           blnShowNextButton = true;
           blnShowHowTo = true;
         }
-        
+       
         blnShowNextButton = true;
         blnShowHowTo = true;
 
+
     }
+
 
     public void patientGeneration(){
       int quantity = 20;
       Random random = new Random();
-  
-
-      
+     
       if(reprint == 0){
         for (int i = 0; i < quantity; i++){
             patientsNum[i] = random.nextInt((i*100),((i+1) *100));
@@ -344,52 +426,68 @@ public class MySketch extends PApplet {
         reprint+=1;
       }
 
-      for (amount = 0; amount < quantity; amount++){
-        
-        fill(15, 47, 118);
 
+      for (amount = 0; amount < quantity; amount++){
+       
+        fill(15, 47, 118);
         textSize(18);
         text(" > ", 450, 30+(28*(amount)));
         text(("First Name: "+firstNames[amount]), 500, 30+(28*(amount)));
         text(("Last Name: "+lastNames[amount]), 750, 30+(28*(amount)));
         text(("Patient Number: "+patientsNum[amount]), 1000, 30+(28*(amount)));
         //System.out.println(("First Name: "+ firstNames[amount]+"\t Last Name: "+lastNames[amount]+"\t Patient Number: "+patientsNum[amount]).toString());
+
       }
+
+      AverageSeverityCalc();
+      WaitingList();
+
+      fill(15, 47, 118);
+      textSize(18);
+      text("Wait List", 1150 , 585);
     }
+
 
     public void howToPage(){
       image(imgHowToPage, 30, 75);
     }
-    
+   
     public void patientInfo(int position){
       String namePatient = firstNames[position-1] +" "+ lastNames[position-1];
       fill(13, 60, 117);
       textSize(40);
       text(namePatient, 450, 60);
 
+
       fill(13, 60, 117);
       textSize(40);
       text("<", 1150, 50);
+
 
       fill(39, 60, 115);
       textSize(25);
       text("Category: ", 450, 110);
 
+
       fill(71, 87, 128);
       textSize(20);
       text(categoriesList[position-1],650, 110);
+
 
       fill(39, 60, 115);
       textSize(25);
       text("Likely Condition: ", 450, 155);
 
+
       fill(71, 87, 128);
       textSize(20);
       text(conditionsList[position-1],650, 155);
 
+
       fill(39, 60, 115);
       textSize(25);
       text("Observed Symptoms: ", 450, 200);
+
 
       fill(71, 87, 128);
       textSize(18);
@@ -400,31 +498,87 @@ public class MySketch extends PApplet {
       textSize(25);
       text("Patient Reported Symptoms: ", 450, 340);
 
+
       for (int i = 0; i < easySymptomsList[position-1].length; i++){
         fill(71, 87, 128);
         textSize(18);
-        text((easySymptomsList[position-1][i] +"     \t\t"+ symptomSeverities[position-1][i]),450, 360+(20*i));
+        text((easySymptomsList[position-1][i] +"     \t\t"+ symptomSeverities[position-1][i]),450, 370+(20*i));
       }
 
+      fill(39, 60, 115);
+      textSize(25);
+      text("Average Severity:  ", 450, 480);
+      text(String.format("%.1f", AverageSeverities[position - 1]),650, 480);
+
     }
-    
+
+    public void WaitingList() {
+      // Assuming the arrays are already defined and populated
+      // firstNames, CalculatedPainScale, WaitList are all arrays of length 3 (or 20 in your case)
+  
+      // Create an array of indices to represent the position of elements in the original array
+      int[] indices = new int[firstNames.length];
+  
+      // Initialize the indices array to the default order (0, 1, 2, ...)
+      for (int i = 0; i < firstNames.length; i++) {
+          indices[i] = i;
+      }
+  
+      // Sort the indices array based on the values in CalculatedPainScale (descending order)
+      for (int i = 0; i < indices.length - 1; i++) {
+          for (int j = i + 1; j < indices.length; j++) {
+              if (CalculatedPainScale[indices[j]] > CalculatedPainScale[indices[i]]) {
+                  // Swap the indices to reorder them by descending pain scale
+                  int temp = indices[i];
+                  indices[i] = indices[j];
+                  indices[j] = temp;
+              }
+          }
+      }
+  
+
+      // Populate the WaitList with names from firstNames, sorted by CalculatedPainScale
+      for (int i = 0; i < firstNames.length; i++) {
+          WaitList[i] = firstNames[indices[i]];  // Assign names to WaitList based on sorted indices
+      }
+
+  }
+  
+  
+  
+    public void showWaitList(){
+      fill(71, 87, 128);
+      textSize(35);
+      text("Waiting List",450, 50);
+      fill(13, 60, 117);
+      textSize(40);
+      text("<", 1150, 50);
+
+      for(int i = 0; i <= 19; i++){
+        fill(71, 87, 128);
+        textSize(19);
+        text(((i+1)+": "+WaitList[i]),450, 80+(25*i));
+      }
+    }
+   
     public void updateSymptoms(int patientNumber) {
       int index = Arrays.stream(patientsNum).boxed().toList().indexOf(patientNumber);
       if (index >= 0) {
-        
+       
         //String namePatient = firstNames[index] + " " + lastNames[index];
           //fill(13, 60, 117);
           //textSize(40);
           //text("Patient: " + namePatient, 35, 60);
-          
+         
           fill(39, 60, 115);
           textSize(25);
           text("Symptoms: ", 40, 110);
-  
+ 
           fill(71, 87, 128);
           textSize(18);
           int yvalue = 140;
           int xvalue = 45;
+
 
           for (String symptom : easySymptomsList[index]) {
               //text("- " + symptom, 45, 100 + (easySymptomsList[index].length - 1) * 20); // Adjust position
@@ -453,70 +607,89 @@ public class MySketch extends PApplet {
               text("|", line10, yvalue + 25);
               text("10", circleX10, yvalue + 50);
 
+
               // Patient 1
               //ellipse(45 + 155, yvalue + 20, 10, 10);
+
 
               yvalue += 80;
           }
 
+
           for (String symptom : easySymptomsList[index]){
+
 
           }
 
-          // Patient circle 1 
+
+          // Patient circle 1
           ellipse(severitySymptom1, 140 + 20, 10, 10);
+
 
           // Patient circle 2
           ellipse(severitySymptom2, 240, 10, 10);
 
-          // Sverity circle 3 
+
+          // Sverity circle 3
           ellipse(severitySymptom3, 320, 10, 10);
+
 
           // Severity circle 4
           ellipse(severitySymptom4, 400, 10, 10);
+
+
 
 
       } else {
           text("Patient number not found.", 450, 60);
       }
 
+
   }
+
 
     public void symptomsPage1(){
       fill(13, 60, 117);
       textSize(30);
       text("Symptom Tracker", 40 + 30 ,70);
 
-      // First heading 
+
+      // First heading
       fill(13,60, 117);
       textSize(40);
       text(">", 45, 110);
+
 
       fill(13, 60, 117);
       textSize(20);
       text("Pre-existing Symptomes", 75, 108);
 
-      // Second Heading 
+
+      // Second Heading
       fill(13,60, 117);
       textSize(40);
       text(">", 45, 110 + 60);
 
+
       fill(13, 60, 117);
       textSize(20);
-      text("New symptom", 75, 168);   
+      text("New symptom", 75, 168);  
    
     }
+
 
     public void mouseClicked(){
         if (mouseX >= 100 && mouseX <= 320 && mouseY >= 330 && mouseY <= 380){
             blnGetStartedselected = true;
         }
 
+
         if (mouseX > 50 && mouseX < 250 && mouseY > 150 && mouseY < 210) {
           isTyping = true;
         } else {
           isTyping = false;
         }
+
 
         if (patientscreen){
           if (mouseX > 1100 && mouseX < 1200 && mouseY > 20 && mouseY < 60) {
@@ -526,20 +699,38 @@ public class MySketch extends PApplet {
           }
         }
 
+
         if (checkbutton){
           if (mouseX > 450 && mouseX < 475 && mouseY > 20 && mouseY < 565){
-            
+           
             for(int i = 0; i < 20; i++){
               if(mouseY < 20+(i*position)){
                 number = i;
                 break;
               }
             }
-            
+           
             showPatient = false;
             checkbutton = false;
             patientscreen = true;
 
+
+          }
+        }
+
+        if (mouseX >= 1100 && mouseX <= 1200 && mouseY >= 550 && mouseY <= 600){
+          showPatient = false;
+          checkbutton = false;
+          patientscreen = false;
+          waitlistscreen = true;
+        }
+
+        if (waitlistscreen){
+          if (mouseX > 1100 && mouseX < 1200 && mouseY > 20 && mouseY < 60) {
+            patientscreen = false;
+            waitlistscreen = false;
+            showPatient = true;
+            checkbutton = true;
           }
         }
 
@@ -552,6 +743,7 @@ public class MySketch extends PApplet {
           }
         }
 
+
         // Do they want to alter a pre-existing symtom?
         if (blnSymptomsPage1 && mouseX >= 35 && mouseX <= (width/3 - 100) && mouseY >= 90 && mouseY <= 90 + 35 ){
           System.out.println("THEY WANT TO UPDATE");
@@ -559,19 +751,26 @@ public class MySketch extends PApplet {
           blnUpdateSymptom = true;
         }
 
+
         if (blnSymptomsPage1 && mouseX >= 35 && mouseX <= (width/3 - 175) && mouseY >= 148 && mouseY <= 148 + 35){
           System.out.println("They ARE FEELING SOMTHING ELSE");
         }
     }
 
-    /* */
+
     public void mouseDragged(){
+
 
       if (blnUpdateSymptom && mouseX >= line0 && mouseX <= line10){
         // Severity of symptom 1
         if (mouseX >= severitySymptom1 - 10 && mouseX <= severitySymptom1 + 10 && mouseY >= (140+20) - 10 && mouseY <= (140+20) + 10){
+            oldSeveritySymptom1 = severitySymptom1;
             severitySymptom1 = mouseX;
-            // WRITE CODE TO SNAP IT INTO A NUMBERED POSITION, FIND THE DFFERENCE OF THAT, AND THEN ADD IT TO THE SEVERITY
+            changeInSeverity1 = severitySymptom1 - oldSeveritySymptom1;
+            if (changeInSeverity1 <= 25){
+              System.out.println("oh ya");
+            }
+           
         }
         //  Severity of symptom 2
         if (mouseX >= severitySymptom2 - 10 && mouseX <= severitySymptom2 + 10 && mouseY >= (240) - 10 && mouseY <= (240) + 10){
@@ -580,14 +779,14 @@ public class MySketch extends PApplet {
         //  Severity of symptom 3
         if (mouseX >= severitySymptom3 - 10 && mouseX <= severitySymptom3 + 10 && mouseY >= (320) - 10 && mouseY <= (320) + 10){
           severitySymptom3 = mouseX;
-        } 
-        //  Severity of symptom 3
+        }
+        //  Severity of symptom 4
         if (mouseX >= severitySymptom4 - 10 && mouseX <= severitySymptom4+ 10 && mouseY >= (320) - 10 && mouseY <= (400) + 10){
           severitySymptom3 = mouseX;
-        } 
+        }
         }  
       }
-    
+   
     public void keyPressed(){
       if (isTyping) {
         if (key >= '0' && key <= '9') {
@@ -605,8 +804,9 @@ public class MySketch extends PApplet {
         }
       }
     }
-    
+   
     public void keyReleased(){}
-    
+   
     public void keyTyped(){}
 }
+

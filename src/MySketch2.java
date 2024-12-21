@@ -231,7 +231,7 @@ public class MySketch2 extends PApplet {
 
       fill(13, 60, 117);
       textSize(40);
-      text("<", 1150, 50);
+      text("<", 1150, 60);
 
       fill(39, 60, 115);
       textSize(25);
@@ -257,8 +257,6 @@ public class MySketch2 extends PApplet {
       textSize(18);
       text(symptomsList[position-1],650, 330);
 
-
-
     }
 
     public void mouseClicked(){
@@ -281,7 +279,7 @@ public class MySketch2 extends PApplet {
         }
 
         if (checkbutton){
-          if (mouseX > 450 && mouseX < 475 && mouseY > 20 && mouseY < 565){
+          if (mouseX > 450 && mouseX < 475 && mouseY > 50 && mouseY < 70){
             
             double position = 545.0/20.0;
             for(int i = 0; i < 20; i++){
