@@ -60,7 +60,10 @@ public class MySketch extends PApplet {
     int changeInSeverity2;
     int changeInSeverity3;
     int changeInSeverity4;
-
+    int difference1;
+    int difference2;
+    int difference3;
+    int difference4;
 
     // WelcomePage Variables
     PImage imgWelcomePage;
@@ -757,7 +760,6 @@ public class MySketch extends PApplet {
         }
     }
 
-
     public void mouseDragged(){
 
 
@@ -767,10 +769,10 @@ public class MySketch extends PApplet {
             oldSeveritySymptom1 = severitySymptom1;
             severitySymptom1 = mouseX;
             changeInSeverity1 = severitySymptom1 - oldSeveritySymptom1;
+
             if (changeInSeverity1 <= 25){
               System.out.println("oh ya");
             }
-           
         }
         //  Severity of symptom 2
         if (mouseX >= severitySymptom2 - 10 && mouseX <= severitySymptom2 + 10 && mouseY >= (240) - 10 && mouseY <= (240) + 10){
@@ -784,8 +786,8 @@ public class MySketch extends PApplet {
         if (mouseX >= severitySymptom4 - 10 && mouseX <= severitySymptom4+ 10 && mouseY >= (320) - 10 && mouseY <= (400) + 10){
           severitySymptom3 = mouseX;
         }
-        }  
       }
+    }
    
     public void keyPressed(){
       if (isTyping) {
