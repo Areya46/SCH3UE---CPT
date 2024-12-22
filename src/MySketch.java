@@ -86,7 +86,10 @@ public class MySketch extends PApplet {
     boolean patientscreen = false;
     boolean caluclating = true;
     boolean waitlistscreen = false;
+    boolean moving = false;
+    String movingDirrection;
     int[] patientsNum = new int[20];
+    boolean start = true;
     String[] firstNames = {
         "John", "Emily", "Michael", "Sophia", "David", "Olivia",
         "James", "Isabella", "Daniel", "Mia", "Ethan", "Ava",
@@ -222,6 +225,15 @@ public class MySketch extends PApplet {
   double[] AverageSeverities = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
   double[] CalculatedPainScale = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
   String[] WaitList = new String[20];
+  String [] ShowedWaitList = {
+      "John Smith", "Emily Johnson", "Michael Ponze", "Sophia Williams", 
+      "David Jones", "Olivia Garcia", "James Miller", "Isabella Davis", 
+      "Daniel Martinez", "Mia Hernandez", "Ethan Lopez", "Ava Gonzalez", 
+      "Alexander Wilson", "Charlotte Anderson", "Benjamin Thomas", 
+      "Amelia Taylor", "Lucas Moore", "Harper Jackson", 
+      "Henry White", "Ella Harris"
+  };
+  String[] Dirrection = {"","","","","","","","","","","","","","","","","","","",""};
 
     //Set Up the screen size
 
@@ -268,6 +280,11 @@ public class MySketch extends PApplet {
 
         if(waitlistscreen){
           showWaitList();
+          moving = true;
+          if(start){
+            switchPosition(0);
+            start = false;
+          }
         }
 
 
@@ -535,7 +552,7 @@ public class MySketch extends PApplet {
 
       // Populate the WaitList with names from firstNames, sorted by CalculatedPainScale
       for (int i = 0; i < firstNames.length; i++) {
-          WaitList[i] = firstNames[indices[i]];  // Assign names to WaitList based on sorted indices
+          WaitList[i] = firstNames[indices[i]] +" "+ lastNames[indices[i]];  // Assign names to WaitList based on sorted indices
       }
 
   }
@@ -548,11 +565,65 @@ public class MySketch extends PApplet {
       textSize(40);
       text("<", 1150, 50);
 
+      for (int i = 0; i <= 19; i++){
+        //int indexInShowedWaitList = Arrays.asList(ShowedWaitList).indexOf(WaitList[i]);
+        
+        if (Dirrection[i].equals("Up")){
+          fill(13, 110, 42);
+          textSize(25);
+          text("^", 700, (80+(25*i))+5);
+        }
+        else if (Dirrection[i].equals("Down")){
+          fill(110, 13, 13);
+          textSize(20);
+          text("v", 700, 80+(25*i));
+        }
+        else{
+          fill(158, 131, 55);
+          textSize(30);
+          text("-", 700, 80+(25*i));
+          Dirrection[i] = "";
+        }
+      }
+
       for(int i = 0; i <= 19; i++){
         fill(71, 87, 128);
         textSize(19);
-        text(((i+1)+": " + WaitList[i]),450, 80+(25*i));
+        text(((i+1)+": " + ShowedWaitList[i]),450, 80+(25*i));
       }
+
+      for(int i = 0; i <= 19; i++){
+        fill(71, 87, 128);
+        textSize(19);
+        text(("Should be position: " + WaitList[i]),750, 80+(25*i));
+      }
+    }
+
+    public void switchPosition(int position){
+      System.out.println("Button Clicked for: "+ShowedWaitList[position]);
+      if ((Dirrection[position]).equals("Up") ){
+        String placeHolder = ShowedWaitList[position];
+        ShowedWaitList[position] = ShowedWaitList[position-1];
+        ShowedWaitList[position-1] = placeHolder;
+      }
+      else if ((Dirrection[position]).equals("Down") ){
+        String placeHolder = ShowedWaitList[position];
+        ShowedWaitList[position] = ShowedWaitList[position+1];
+        ShowedWaitList[position+1] = placeHolder;
+      }
+            // Recalculate directions for all entries
+      for (int i = 0; i < ShowedWaitList.length; i++) {
+        int indexInWaitList = Arrays.asList(WaitList).indexOf(ShowedWaitList[i]);
+
+        if (indexInWaitList < i) {
+          Dirrection[i] = "Up";
+        } else if (indexInWaitList > i) {
+          Dirrection[i] = "Down";
+        } else {
+          Dirrection[i] = "";
+        }
+      }
+      showWaitList();
     }
    
     public void updateSymptoms(int patientNumber) {
@@ -726,6 +797,18 @@ public class MySketch extends PApplet {
           }
         }
 
+        if (moving) {
+          if (mouseX > 680 && mouseX < 720) {
+            for (int i = 0; i <= 19; i++) {
+              // Check if mouseY is within the range of the current button
+              if (mouseY > (80 + 25 * i) - 10 && mouseY < (80 + 25 * i) + 10) {
+                switchPosition(i);
+                break; // Exit loop after finding the matching button
+              }
+            }
+          }
+        }
+        
         // Was next selcted?
         if (mouseX >= 240 && mouseX <= (240 + 125) && mouseY >= 525 && mouseY <= (525 + 30)){
           if (blnShowHowTo){
@@ -846,4 +929,3 @@ public class MySketch extends PApplet {
       }
     }   
 }
-
