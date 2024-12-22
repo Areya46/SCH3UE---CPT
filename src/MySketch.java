@@ -51,8 +51,7 @@ public class MySketch extends PApplet {
     int severitySymptom1 = 45 + 155;
     int severitySymptom2 = 45 + 155;
     int severitySymptom3 = 45 + 155;
-<<<<<<< HEAD
-    int severitySymptom4= 45 + 155; 
+    int severitySymptom4 = 45 + 155; 
     double oldSeveritySymptom1;
     double oldSeveritySymptom2;
     double oldSeveritySymptom3;
@@ -65,22 +64,6 @@ public class MySketch extends PApplet {
     double difference2;
     double difference3;
     double difference4;
-     
-=======
-    int severitySymptom4= 45 + 155;
-    int oldSeveritySymptom1;
-    int oldSeveritySymptom2;
-    int oldSeveritySymptom3;
-    int oldSeveritySymptom4;
-    int changeInSeverity1;
-    int changeInSeverity2;
-    int changeInSeverity3;
-    int changeInSeverity4;
-    int difference1;
-    int difference2;
-    int difference3;
-    int difference4;
->>>>>>> e3f72ec648874225c7121193441081afad9c67cc
 
     // WelcomePage Variables
     PImage imgWelcomePage;
@@ -258,19 +241,15 @@ public class MySketch extends PApplet {
     public void draw() {
         float division = width / parseFloat(3);
 
-
         background(232, 237, 250);
-
 
         // Draw the vertical line dividing the two sides of the screen
         stroke(106, 133, 166);
         strokeWeight(5);
         line(division, 0, division, height);
 
-
          // Draw outline of phone for patient screen
          image(imgPhoneOutline, 14,5);
-
 
         if (showPatient){
           patientGeneration();
@@ -368,9 +347,6 @@ public class MySketch extends PApplet {
        // Welcome page
        imgWelcomePage = loadImage("/Images/WelcomePage.png");
        imgWelcomePage.resize(345, 550);
-
-
-
 
        // Insert patient number
        imgPatientNumber = loadImage("/Images/pleaseEnterPatientNumber.png");
@@ -564,8 +540,6 @@ public class MySketch extends PApplet {
 
   }
   
-  
-  
     public void showWaitList(){
       fill(71, 87, 128);
       textSize(35);
@@ -577,7 +551,7 @@ public class MySketch extends PApplet {
       for(int i = 0; i <= 19; i++){
         fill(71, 87, 128);
         textSize(19);
-        text(((i+1)+": "+WaitList[i]),450, 80+(25*i));
+        text(((i+1)+": " + WaitList[i]),450, 80+(25*i));
       }
     }
    
@@ -627,20 +601,14 @@ public class MySketch extends PApplet {
               text("|", line10, yvalue + 25);
               text("10", circleX10, yvalue + 50);
 
-
               // Patient 1
               //ellipse(45 + 155, yvalue + 20, 10, 10);
-
 
               yvalue += 80;
           }
 
-
           for (String symptom : easySymptomsList[index]){
-
-
           }
-
 
           // Patient circle 1
           ellipse(severitySymptom1, 140 + 20, 10, 10);
@@ -657,16 +625,11 @@ public class MySketch extends PApplet {
           // Severity circle 4
           ellipse(severitySymptom4, 400, 10, 10);
 
-
-
-
       } else {
           text("Patient number not found.", 450, 60);
       }
 
-
   }
-
 
     public void symptomsPage1(){
       fill(13, 60, 117);
@@ -697,6 +660,15 @@ public class MySketch extends PApplet {
    
     }
 
+    public void updateSeverity1(){
+      int index = Arrays.stream(patientsNum).boxed().toList().indexOf(currentPatient);
+      double change1 = (severitySymptom1 - oldSeveritySymptom1);
+      if (change1 <= 40){
+        symptomSeverities[index][0] += 1;
+        Math.min(10, symptomSeverities[index][0] + 1);
+        oldSeveritySymptom1 = severitySymptom1;
+      }
+    }
 
     public void mouseClicked(){
         if (mouseX >= 100 && mouseX <= 320 && mouseY >= 330 && mouseY <= 380){
@@ -775,61 +747,43 @@ public class MySketch extends PApplet {
         if (blnSymptomsPage1 && mouseX >= 35 && mouseX <= (width/3 - 175) && mouseY >= 148 && mouseY <= 148 + 35){
           System.out.println("They ARE FEELING SOMTHING ELSE");
         }
-    }
-    
-    /*
-    public void mouseDragged(){
 
+   }
 
-      if (blnUpdateSymptom && mouseX >= line0 && mouseX <= line10){
-        // Severity of symptom 1
-        if (mouseX >= severitySymptom1 - 10 && mouseX <= severitySymptom1 + 10 && mouseY >= (140+20) - 10 && mouseY <= (140+20) + 10){
-            oldSeveritySymptom1 = severitySymptom1;
-            severitySymptom1 = mouseX;
-            changeInSeverity1 = severitySymptom1 - oldSeveritySymptom1;
-<<<<<<< HEAD
-            // when found severity, symptomSeverities[current patient index][which slider it is] += difference
-            for (int i = 0; i <=10; i++){
-              //if (changeInSeverity1 )
-=======
-
-            if (changeInSeverity1 <= 25){
-              System.out.println("oh ya");
->>>>>>> e3f72ec648874225c7121193441081afad9c67cc
-            }
+      public void mouseDragged(){
+        if (blnUpdateSymptom && mouseX >= line0 && mouseX <= line10){
+          int index = Arrays.stream(patientsNum).boxed().toList().indexOf(currentPatient);
+          if (mouseX >= severitySymptom1 - 10 && mouseX <= severitySymptom1 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
+            oldSeveritySymptom1 = severitySymptom1; // Save the previous position
+            severitySymptom1 = mouseX; // Update the new position
+            updateSeverity1();
+          }
         }
-        //  Severity of symptom 2
-        if (mouseX >= severitySymptom2 - 10 && mouseX <= severitySymptom2 + 10 && mouseY >= (240) - 10 && mouseY <= (240) + 10){
-          severitySymptom2 = mouseX;
-        }
-        //  Severity of symptom 3
-        if (mouseX >= severitySymptom3 - 10 && mouseX <= severitySymptom3 + 10 && mouseY >= (320) - 10 && mouseY <= (320) + 10){
-          severitySymptom3 = mouseX;
-        }
-        //  Severity of symptom 4
-<<<<<<< HEAD
-        if (mouseX >= severitySymptom4 - 10 && mouseX <= severitySymptom4+ 10 && mouseY >= (400) - 10 && mouseY <= (400) + 10){
-          severitySymptom4 = mouseX;
-        } 
-        }  
       }
-      */
 
+      public void mouseReleased(){
+
+      }
+
+    
+   /*
       public void mouseDragged() {
         if (blnUpdateSymptom && mouseX >= line0 && mouseX <= line10) {
+          int index = Arrays.stream(patientsNum).boxed().toList().indexOf(currentPatient);
+            //symptomSeverities[current patient index][which slider it is] += change1;
             // Severity of symptom 1
             if (mouseX >= severitySymptom1 - 10 && mouseX <= severitySymptom1 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10) {
                 oldSeveritySymptom1 = severitySymptom1; // Save the previous position
-                System.out.println("old severity symptom" + oldSeveritySymptom1);
-                System.out.println("new severity symptom" + severitySymptom1);
                 severitySymptom1 = mouseX; // Update the new position
+
                 
-                // Calculate the difference
-                double previousValue1 = (oldSeveritySymptom1 - line0) / 20; // Convert position to severity value
-                double currentValue1 = (severitySymptom1 - line0) / 20; // Convert new position to severity value
-                //double change1 = currentValue1 - previousValue1;
-                double change1 = previousValue1 - currentValue1;
+                //Calculate the difference
+                double change1 = (severitySymptom1 - oldSeveritySymptom1);
+                if (change1 <= 35){
+                  symptomSeverities[currentPatient][0] += 1;
+                }
                 System.out.println("Change in severity for symptom 1: " + change1);
+
             }
     
             // Severity of symptom 2
@@ -871,17 +825,9 @@ public class MySketch extends PApplet {
                 System.out.println("Change in severity for symptom 4: " + change4);
             }
         }
-    }
-    
-    
-=======
-        if (mouseX >= severitySymptom4 - 10 && mouseX <= severitySymptom4+ 10 && mouseY >= (320) - 10 && mouseY <= (400) + 10){
-          severitySymptom3 = mouseX;
-        }
-      }
-    }
-   
->>>>>>> e3f72ec648874225c7121193441081afad9c67cc
+      }  
+      */  
+
     public void keyPressed(){
       if (isTyping) {
         if (key >= '0' && key <= '9') {
@@ -898,10 +844,6 @@ public class MySketch extends PApplet {
           }
         }
       }
-    }
-   
-    public void keyReleased(){}
-   
-    public void keyTyped(){}
+    }   
 }
 
