@@ -64,6 +64,9 @@ public class MySketch extends PApplet {
     double difference2;
     double difference3;
     double difference4;
+    int elpasedTime;
+    int startCountDown;
+    boolean blnStartTIMER;
 
     // WelcomePage Variables
     PImage imgWelcomePage;
@@ -294,6 +297,9 @@ public class MySketch extends PApplet {
           image(imgBackButton, 45, 525);
         }
 
+        if (blnStartTIMER){
+          twoMinuteTimer();
+        }
 
     }
      
@@ -334,8 +340,6 @@ public class MySketch extends PApplet {
       }
   }  
 
-
-
     public void loadPatientImages(){
 
 
@@ -369,7 +373,6 @@ public class MySketch extends PApplet {
 
 
     }
-
 
     public void patientNumber(){
         // Text saying to enter patient number below
@@ -407,9 +410,7 @@ public class MySketch extends PApplet {
         blnShowNextButton = true;
         blnShowHowTo = true;
 
-
     }
-
 
     public void patientGeneration(){
       int quantity = 20;
@@ -443,7 +444,6 @@ public class MySketch extends PApplet {
       text("Wait List", 1150 , 585);
     }
 
-
     public void howToPage(){
       image(imgHowToPage, 30, 75);
     }
@@ -472,12 +472,12 @@ public class MySketch extends PApplet {
 
       fill(39, 60, 115);
       textSize(25);
-      text("Likely Condition: ", 450, 155);
+      text("Likely Condition: ", 450 , 155);
 
 
       fill(71, 87, 128);
       textSize(20);
-      text(conditionsList[position-1],650, 155);
+      text(conditionsList[position-1],660, 155);
 
 
       fill(39, 60, 115);
@@ -492,19 +492,19 @@ public class MySketch extends PApplet {
 
       fill(39, 60, 115);
       textSize(25);
-      text("Patient Reported Symptoms: ", 450, 340);
+      text("Patient Reported Symptoms: ", 450, 340 + 35);
 
 
       for (int i = 0; i < easySymptomsList[position-1].length; i++){
         fill(71, 87, 128);
         textSize(18);
-        text((easySymptomsList[position-1][i] +"     \t\t"+ symptomSeverities[position-1][i]),450, 370+(20*i));
+        text((easySymptomsList[position-1][i] +"     \t\t"+ symptomSeverities[position-1][i]),450, 370+(20*i) + 30);
       }
 
       fill(39, 60, 115);
       textSize(25);
-      text("Average Severity:  ", 450, 480);
-      text(String.format("%.1f", AverageSeverities[position - 1]),650, 480);
+      text("Average Severity:  ", 450, 480 + 15);
+      text(String.format("%.1f", AverageSeverities[position - 1]),650 + 10, 480 + 15);
 
     }
 
@@ -667,6 +667,7 @@ public class MySketch extends PApplet {
         symptomSeverities[index][0] += 1;
         Math.min(10, symptomSeverities[index][0] + 1);
         oldSeveritySymptom1 = severitySymptom1;
+        System.out.println(symptomSeverities);
       }
     }
 
@@ -747,24 +748,34 @@ public class MySketch extends PApplet {
         if (blnSymptomsPage1 && mouseX >= 35 && mouseX <= (width/3 - 175) && mouseY >= 148 && mouseY <= 148 + 35){
           System.out.println("They ARE FEELING SOMTHING ELSE");
         }
-
    }
+
+      public void twoMinuteTimer(){
+        startCountDown = second();
+        elpasedTime = second() - startCountDown;
+        System.out.println(startCountDown);
+
+        if (elpasedTime >= startCountDown + 5){
+          updateSeverity1();
+        }
+
+
+      }
 
       public void mouseDragged(){
         if (blnUpdateSymptom && mouseX >= line0 && mouseX <= line10){
-          int index = Arrays.stream(patientsNum).boxed().toList().indexOf(currentPatient);
           if (mouseX >= severitySymptom1 - 10 && mouseX <= severitySymptom1 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
+            blnStartTIMER = true;
+            // Figure out the current itme 
+            //int startCountDown = second();
             oldSeveritySymptom1 = severitySymptom1; // Save the previous position
             severitySymptom1 = mouseX; // Update the new position
-            updateSeverity1();
+            // If two minutes has passed update the code 
+            // elpasedTime = second() - startCountDown;
+            // System.out.println(startCountDown);
           }
         }
       }
-
-      public void mouseReleased(){
-
-      }
-
     
    /*
       public void mouseDragged() {
