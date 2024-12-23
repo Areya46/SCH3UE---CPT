@@ -87,7 +87,9 @@ public class MySketch extends PApplet {
     boolean caluclating = true;
     boolean waitlistscreen = false;
     boolean moving = false;
+    boolean ShowPatientInfo = false;
     String movingDirrection;
+    int checkingPatientPosition;
     int[] patientsNum = new int[20];
     boolean start = true;
     String[] firstNames = {
@@ -225,6 +227,14 @@ public class MySketch extends PApplet {
   double[] AverageSeverities = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
   double[] CalculatedPainScale = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
   String[] WaitList = new String[20];
+  String [] FullNames = {
+    "John Smith", "Emily Johnson", "Michael Ponze", "Sophia Williams", 
+    "David Jones", "Olivia Garcia", "James Miller", "Isabella Davis", 
+    "Daniel Martinez", "Mia Hernandez", "Ethan Lopez", "Ava Gonzalez", 
+    "Alexander Wilson", "Charlotte Anderson", "Benjamin Thomas", 
+    "Amelia Taylor", "Lucas Moore", "Harper Jackson", 
+    "Henry White", "Ella Harris"
+};
   String [] ShowedWaitList = {
       "John Smith", "Emily Johnson", "Michael Ponze", "Sophia Williams", 
       "David Jones", "Olivia Garcia", "James Miller", "Isabella Davis", 
@@ -285,7 +295,12 @@ public class MySketch extends PApplet {
             switchPosition(0);
             start = false;
           }
+          if(ShowPatientInfo){
+            CheckInfo(checkingPatientPosition);
+          }
         }
+
+
 
 
         if (blnShowNextButton){
@@ -596,13 +611,14 @@ public class MySketch extends PApplet {
         fill(71, 87, 128);
         textSize(19);
         text(((i+1)+": " + ShowedWaitList[i]),450, 80+(25*i));
+        text(">", 770, 80+(25*i));
       }
 
-      for(int i = 0; i <= 19; i++){
-        fill(71, 87, 128);
-        textSize(19);
-        text(("Best patient option: " + WaitList[i]),750, 80+(25*i));
-      }
+      // for(int i = 0; i <= 19; i++){
+      //   fill(71, 87, 128);
+      //   textSize(19);
+      //   text(("Best patient option: " + WaitList[i]),750, 80+(25*i));
+      // }
     }
 
     public void switchPosition(int position){
@@ -632,6 +648,11 @@ public class MySketch extends PApplet {
       showWaitList();
     }
    
+    public void CheckInfo(int position){
+      int InfoIndex = Arrays.asList(FullNames).indexOf(ShowedWaitList[position]);
+      text(("Severity: "+AverageSeverities[InfoIndex] +"        Category: "+ categoriesList[InfoIndex]), 800, 80+(25*position));
+    }   
+
     public void updateSymptoms(int patientNumber) {
       int index = Arrays.stream(patientsNum).boxed().toList().indexOf(patientNumber);
       if (index >= 0) {
@@ -800,6 +821,21 @@ public class MySketch extends PApplet {
             waitlistscreen = false;
             showPatient = true;
             checkbutton = true;
+          }
+          if (mouseX > 765 && mouseX < 785) {
+            ShowPatientInfo = true;
+          }
+        }
+        else{
+          ShowPatientInfo = false;
+        }
+
+        if(ShowPatientInfo){
+          for (int i = 0; i <= 19; i++) {
+            // Check if mouseY is within the range of the current button
+            if (mouseY > (80 + 25 * i) - 10 && mouseY < (80 + 25 * i) + 10) {
+              checkingPatientPosition = i;
+            }
           }
         }
 
