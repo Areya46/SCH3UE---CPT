@@ -457,7 +457,7 @@ public class MySketch extends PApplet {
 
       fill(15, 47, 118);
       textSize(18);
-      text("Wait List", 1150 , 585);
+      text("Wait List", 1170 , 585);
     }
 
 
@@ -572,11 +572,17 @@ public class MySketch extends PApplet {
           fill(13, 110, 42);
           textSize(25);
           text("^", 700, (80+(25*i))+5);
+          fill(13, 60, 117);
+          textSize(20);
+          text("v", 715, (80+(25*i))-1);          
         }
         else if (Dirrection[i].equals("Down")){
           fill(110, 13, 13);
           textSize(20);
           text("v", 700, 80+(25*i));
+          fill(13, 60, 117);
+          textSize(25);
+          text("^", 715, (80+(25*i))+7);
         }
         else{
           fill(158, 131, 55);
@@ -595,7 +601,7 @@ public class MySketch extends PApplet {
       for(int i = 0; i <= 19; i++){
         fill(71, 87, 128);
         textSize(19);
-        text(("Should be position: " + WaitList[i]),750, 80+(25*i));
+        text(("Best patient option: " + WaitList[i]),750, 80+(25*i));
       }
     }
 
@@ -781,7 +787,7 @@ public class MySketch extends PApplet {
           }
         }
 
-        if (mouseX >= 1100 && mouseX <= 1200 && mouseY >= 550 && mouseY <= 600){
+        if (mouseX >= 1150 && mouseX <= 1300 && mouseY >= 550 && mouseY <= 600){
           showPatient = false;
           checkbutton = false;
           patientscreen = false;
@@ -798,10 +804,25 @@ public class MySketch extends PApplet {
         }
 
         if (moving) {
-          if (mouseX > 680 && mouseX < 720) {
+          if (mouseX > 690 && mouseX < 715) {
             for (int i = 0; i <= 19; i++) {
               // Check if mouseY is within the range of the current button
               if (mouseY > (80 + 25 * i) - 10 && mouseY < (80 + 25 * i) + 10) {
+                switchPosition(i);
+                break; // Exit loop after finding the matching button
+              }
+            }
+          }
+          if (mouseX > 715 && mouseX < 740) {
+            for (int i = 0; i <= 19; i++) {
+              // Check if mouseY is within the range of the current button
+              if (mouseY > (80 + 25 * i) - 10 && mouseY < (80 + 25 * i) + 10) {
+                if(Dirrection[i].equals("Up")){
+                  Dirrection[i] = "Down";
+                }
+                else if(Dirrection[i].equals("Down")){
+                  Dirrection[i] = "Up";
+                }
                 switchPosition(i);
                 break; // Exit loop after finding the matching button
               }
