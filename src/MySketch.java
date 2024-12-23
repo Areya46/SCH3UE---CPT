@@ -67,6 +67,7 @@ public class MySketch extends PApplet {
     int elpasedTime;
     int startCountDown;
     boolean blnStartTIMER;
+    boolean blnAddSymptom;
 
     // WelcomePage Variables
     PImage imgWelcomePage;
@@ -304,9 +305,6 @@ public class MySketch extends PApplet {
           }
         }
 
-
-
-
         if (blnShowNextButton){
           image(imgNextButton, 240,525);
           if (blnPatientEnteredNumber){
@@ -325,6 +323,11 @@ public class MySketch extends PApplet {
           blnShowNextButton = false;
         }
 
+        if (blnAddSymptom){
+          addSymptom(currentPatient);
+          blnShowNextButton = false;
+        }
+
 
         if (blnShowBackButton){
           image(imgBackButton, 45, 525);
@@ -339,7 +342,6 @@ public class MySketch extends PApplet {
     public static void main(String[] args) {
         PApplet.main("MySketch");
     }
-
 
     public void welcomePage(){
         image(imgWelcomePage, 25, 30);
@@ -619,7 +621,7 @@ public class MySketch extends PApplet {
           textSize(25);
           text("^", 715, (80+(25*i))+7);
         }
-        else{
+        else {
           fill(158, 131, 55);
           textSize(30);
           text("-", 700, 80+(25*i));
@@ -747,6 +749,28 @@ public class MySketch extends PApplet {
           text("Patient number not found.", 450, 60);
       }
 
+  }
+
+  public void addSymptom(int patientNumber){
+    int index = Arrays.stream(patientsNum).boxed().toList().indexOf(patientNumber);
+    if (index >= 0){
+      fill(39, 60, 115);
+      textSize(20);
+      text("Which of the following best", 40, 85);
+      text("described the another reason why", 40, 105);
+      text("you are here to see an emergency", 40, 125);
+      text("room doctor: ", 40, 145);
+
+      fill(71, 87, 128);
+      textSize(18);
+
+      fill(71, 87, 128);
+      textSize(18);
+      text("> Bleeding", 40, 155);
+      text("> Chest pain/Chest related issues", 40, 155 + 20);
+      text("> Feel light headed", 40, 155 + 40);
+      text("> Abrupt loss of strength in limbs", 40, 155 + 60);
+    }
   }
 
     public void symptomsPage1(){
@@ -903,10 +927,11 @@ public class MySketch extends PApplet {
           blnSymptomsPage1 = false;
           blnUpdateSymptom = true;
         }
-
-
+        
         if (blnSymptomsPage1 && mouseX >= 35 && mouseX <= (width/3 - 175) && mouseY >= 148 && mouseY <= 148 + 35){
           System.out.println("They ARE FEELING SOMTHING ELSE");
+          blnAddSymptom = true;
+          blnSymptomsPage1 = false;
         }
    }
 
