@@ -954,19 +954,26 @@ public class MySketch extends PApplet {
         // They have chest pain 
         if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 205 && mouseY >= 185){
           System.out.println("they have chest pain");
+          
+          int currentPatientNum = -1; // Default value if not found
+          for (int i = 0; i < patientsNum.length; i++) {
+            
+              if (patientsNum[i] == currentPatient) {
+                  currentPatientNum = i;
+                  break;
+              }
+          }
           // ADD THREE TO AVERAGE SEVERITY
-
-          /*
-           * if (currentPatient >= 0 && currentPatient < AverageSeverities.length) {
-            if (AverageSeverities[currentPatient] <= 10) {
-                AverageSeverities[currentPatient] += 3;
+          if (currentPatientNum >= 0 && currentPatientNum < (AverageSeverities.length)) {
+            if (AverageSeverities[currentPatientNum] <= 10) {
+                AverageSeverities[currentPatientNum] += 3;
                 System.out.println("I added 3");
             }
           }
-            else{
-              System.out.println("This patient is out of bounds" + AverageSeverities[currentPatient]);
-            }
-           */
+          else{
+            System.out.println("This patient is out of bounds" + AverageSeverities[currentPatientNum]);
+          }
+           
         }
 
         // They feel light headed 
