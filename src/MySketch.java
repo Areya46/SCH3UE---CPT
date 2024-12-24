@@ -333,9 +333,9 @@ public class MySketch extends PApplet {
           image(imgBackButton, 45, 525);
         }
 
-        if (blnStartTIMER){
-          twoMinuteTimer();
-        }
+        //if (blnStartTIMER){
+          //twoMinuteTimer();
+        //}
 
     }
      
@@ -818,10 +818,6 @@ public class MySketch extends PApplet {
       }
     }
 
-    public void informationPage(){
-
-    }
-
     public void mouseClicked(){
         if (mouseX >= 100 && mouseX <= 320 && mouseY >= 330 && mouseY <= 380){
             blnGetStartedselected = true;
@@ -1011,6 +1007,7 @@ public class MySketch extends PApplet {
         }
    }
 
+   /* 
       public void twoMinuteTimer(){
         startCountDown = second();
         elpasedTime = second() - startCountDown;
@@ -1022,18 +1019,15 @@ public class MySketch extends PApplet {
 
 
       }
+      */
 
       public void mouseDragged(){
         if (blnUpdateSymptom && mouseX >= line0 && mouseX <= line10){
           if (mouseX >= severitySymptom1 - 10 && mouseX <= severitySymptom1 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
             blnStartTIMER = true;
-            // Figure out the current itme 
-            //int startCountDown = second();
-            oldSeveritySymptom1 = severitySymptom1; // Save the previous position
+            //oldSeveritySymptom1 = severitySymptom1; // Save the previous position
             severitySymptom1 = mouseX; // Update the new position
-            // If two minutes has passed update the code 
-            // elpasedTime = second() - startCountDown;
-            // System.out.println(startCountDown);
+            
           }
         }
       }
