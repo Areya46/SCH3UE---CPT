@@ -486,10 +486,6 @@ public class MySketch extends PApplet {
       fill(13, 60, 117);
       textSize(40);
       text(namePatient, 450, 60);
-      ////////////////////////////////////////////////////////////////////////////////////FIX
-      List<String> showedWaitList = Arrays.asList(ShowedWaitList);
-      int index = showedWaitList.indexOf(FullNames[position]);
-      text("# "+(index), 750, 60);
 
       fill(13, 60, 117);
       textSize(40);
@@ -528,13 +524,13 @@ public class MySketch extends PApplet {
 
       fill(39, 60, 115);
       textSize(25);
-      text("Patient Reported Symptoms: ", 450, 340);
+      text("Patient Reported Symptoms: ", 450, 355);
 
 
       for (int i = 0; i < easySymptomsList[position-1].length; i++){
         fill(71, 87, 128);
         textSize(18);
-        text((easySymptomsList[position-1][i] +"     \t\t"+ symptomSeverities[position-1][i]),450, 370+(20*i));
+        text((easySymptomsList[position-1][i] +"     \t\t"+ symptomSeverities[position-1][i]),450, 380+(20*i));
       }
 
       fill(39, 60, 115);
@@ -551,9 +547,14 @@ public class MySketch extends PApplet {
       line(900, 500, 1180, 500);
       
       for(int i = 0; i <4; i++){
+
         fill(255, 255, 255); // Set fill color to white
-        float rectWidth = 280 * ((float)symptomSeverities[position][i] / 10); // Cast to float
+        float rectWidth = 280 * ((float)symptomSeverities[position-1][i] / 10); // Cast to float
         rect(900, 300 + (50 * i), rectWidth, 50); // Draw rectangle
+
+        fill(39, 60, 115);
+        textSize(10);
+        text(easySymptomsList[position-1][i], 910, 325 + (50 * i));
       }
       
 
