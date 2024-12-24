@@ -766,10 +766,15 @@ public class MySketch extends PApplet {
 
       fill(71, 87, 128);
       textSize(18);
-      text("> Bleeding", 40, 155);
-      text("> Chest pain/Chest related issues", 40, 155 + 20);
-      text("> Feel light headed", 40, 155 + 40);
-      text("> Abrupt loss of strength in limbs", 40, 155 + 60);
+      text("> Bleeding", 40, 175);
+      text("> Chest pain/Chest related issues", 40, 205);
+      text("> Feel light headed", 40, 240);
+      text("> Abrupt loss of strength in limbs", 40, 275);
+      text("> Sudden difficulty with speech", 40, 310);
+      text("> Are in/are entering labour", 40, 345);
+      text("> Shortness of breath", 40, 380);
+      text("> Developed an itchiness/rash", 40, 415);
+      text("> Other", 40, 450);
     }
   }
 
@@ -811,6 +816,10 @@ public class MySketch extends PApplet {
         oldSeveritySymptom1 = severitySymptom1;
         System.out.println(symptomSeverities);
       }
+    }
+
+    public void informationPage(){
+
     }
 
     public void mouseClicked(){
@@ -867,7 +876,7 @@ public class MySketch extends PApplet {
             showPatient = true;
             checkbutton = true;
           }
-          if (mouseX > 765 && mouseX < 785) {
+          if (mouseX > (width/3) && mouseX < 785) {
             ShowPatientInfo = true;
           }
         }
@@ -928,10 +937,77 @@ public class MySketch extends PApplet {
           blnUpdateSymptom = true;
         }
         
+        // Do they want to update a symptom?
         if (blnSymptomsPage1 && mouseX >= 35 && mouseX <= (width/3 - 175) && mouseY >= 148 && mouseY <= 148 + 35){
           System.out.println("They ARE FEELING SOMTHING ELSE");
           blnAddSymptom = true;
           blnSymptomsPage1 = false;
+        }
+
+        // They are bleeding
+        if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 175 && mouseY >= 155){
+          System.out.println("they are bleeding");
+          // ADD 2 TO AVERAGE SEVERITY 
+        }
+
+        // They have chest pain 
+        if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 205 && mouseY >= 185){
+          System.out.println("they have chest pain");
+          // ADD THREE TO AVERAGE SEVERITY
+
+          /*
+           * if (currentPatient >= 0 && currentPatient < AverageSeverities.length) {
+            if (AverageSeverities[currentPatient] <= 10) {
+                AverageSeverities[currentPatient] += 3;
+                System.out.println("I added 3");
+            }
+          }
+            else{
+              System.out.println("This patient is out of bounds" + AverageSeverities[currentPatient]);
+            }
+           */
+        }
+
+        // They feel light headed 
+        if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 240 && mouseY >= 220){
+          System.out.println("they are feeling light headed");
+          // ADD 1 TO AVERGAE SEVERITY
+        }
+
+        // They feel a loss of strength in their limbs 
+        if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 275 && mouseY >= 255){
+          System.out.println("Abrupt loss of strength in limbs");
+          // ADD 3 TO AVERAGE SEVERITY
+        }
+
+        // Sudden difficulty with speech 
+        if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 310 && mouseY >= 290){
+          System.out.println("Sudden difficulty with speech");
+          // ADD THREE TO AVERAGE SEVERITY 
+        }
+
+        // Are in/entering labour 
+        if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 345 && mouseY >= 325){
+          System.out.println("Are in/entering labour");  
+          // MOVE THEM TO THE TOP OF THE PRIOTITY LIST 
+        }
+
+        // They are experiencing a shortness of breath 
+        if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 380 && mouseY >= 360){
+          System.out.println("They are experiencing a shortness of breath");
+          // MOVE TO THE TOP OF THE LIST
+        }
+
+        // They are developing an rash/are itchy
+        if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 415 && mouseY >= 395){
+          System.out.println("Developed an itchiness/rash");
+          // ADD 2.5 TO THE AVERAGE SEVERITY 
+        }
+        
+        // They have "other" symptomes
+        if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 450 && mouseY >= 430){
+          System.out.println("Other");
+          // ADD 1.5 TO THE AVERGAE SEVERITY
         }
    }
 
