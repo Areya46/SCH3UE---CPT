@@ -637,11 +637,6 @@ public class MySketch extends PApplet {
         text(">", 770, 80+(25*i));
       }
 
-      // for(int i = 0; i <= 19; i++){
-      //   fill(71, 87, 128);
-      //   textSize(19);
-      //   text(("Best patient option: " + WaitList[i]),750, 80+(25*i));
-      // }
     }
 
     public void switchPosition(int position){
@@ -891,7 +886,7 @@ public class MySketch extends PApplet {
         }
 
         if (moving) {
-          if (mouseX > 690 && mouseX < 715) {
+          if (mouseX > width/3 && mouseX < 715) {
             for (int i = 0; i <= 19; i++) {
               // Check if mouseY is within the range of the current button
               if (mouseY > (80 + 25 * i) - 10 && mouseY < (80 + 25 * i) + 10) {
@@ -944,7 +939,24 @@ public class MySketch extends PApplet {
         // They are bleeding
         if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 175 && mouseY >= 155){
           System.out.println("they are bleeding");
-          // ADD 2 TO AVERAGE SEVERITY 
+          int currentPatientNum = -1; // Default value if not found
+          for (int i = 0; i < patientsNum.length; i++) {
+            
+              if (patientsNum[i] == currentPatient) {
+                  currentPatientNum = i;
+                  break;
+              }
+          }
+          // ADD TWO TO AVERAGE SEVERITY
+          if (currentPatientNum >= 0 && currentPatientNum < (AverageSeverities.length)) {
+            if (AverageSeverities[currentPatientNum] <= 10) {
+                AverageSeverities[currentPatientNum] += 2;
+                System.out.println("I added 2");
+            }
+            if (AverageSeverities[currentPatientNum] > 10){
+              AverageSeverities[currentPatientNum] = 10;
+            }
+          }           
         }
 
         // They have chest pain 
@@ -965,53 +977,162 @@ public class MySketch extends PApplet {
                 AverageSeverities[currentPatientNum] += 3;
                 System.out.println("I added 3");
             }
-          }
-          else{
-            System.out.println("This patient is out of bounds" + AverageSeverities[currentPatientNum]);
-          }
-           
+            if (AverageSeverities[currentPatientNum] > 10){
+              AverageSeverities[currentPatientNum] = 10;
+            }
+          }           
         }
 
         // They feel light headed 
         if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 240 && mouseY >= 220){
           System.out.println("they are feeling light headed");
           // ADD 1 TO AVERGAE SEVERITY
+          int currentPatientNum = -1; // Default value if not found
+          for (int i = 0; i < patientsNum.length; i++) {
+            
+              if (patientsNum[i] == currentPatient) {
+                  currentPatientNum = i;
+                  break;
+              }
+          }
+          // ADD ONE TO AVERAGE SEVERITY
+          if (currentPatientNum >= 0 && currentPatientNum < (AverageSeverities.length)) {
+            if (AverageSeverities[currentPatientNum] <= 10) {
+                AverageSeverities[currentPatientNum] += 1;
+                System.out.println("I added 1");
+            }
+            if (AverageSeverities[currentPatientNum] > 10){
+              AverageSeverities[currentPatientNum] = 10;
+            }
+          }           
         }
 
         // They feel a loss of strength in their limbs 
         if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 275 && mouseY >= 255){
           System.out.println("Abrupt loss of strength in limbs");
-          // ADD 3 TO AVERAGE SEVERITY
+          int currentPatientNum = -1; // Default value if not found
+          for (int i = 0; i < patientsNum.length; i++) {
+            
+              if (patientsNum[i] == currentPatient) {
+                  currentPatientNum = i;
+                  break;
+              }
+          }
+          // ADD THREE TO AVERAGE SEVERITY
+          if (currentPatientNum >= 0 && currentPatientNum < (AverageSeverities.length)) {
+            if (AverageSeverities[currentPatientNum] <= 10) {
+                AverageSeverities[currentPatientNum] += 3;
+                System.out.println("I added 3");
+            }
+            if (AverageSeverities[currentPatientNum] > 10){
+              AverageSeverities[currentPatientNum] = 10;
+            }
+          }           
         }
 
         // Sudden difficulty with speech 
         if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 310 && mouseY >= 290){
           System.out.println("Sudden difficulty with speech");
           // ADD THREE TO AVERAGE SEVERITY 
+          int currentPatientNum = -1; // Default value if not found
+          for (int i = 0; i < patientsNum.length; i++) {
+            
+              if (patientsNum[i] == currentPatient) {
+                  currentPatientNum = i;
+                  break;
+              }
+          }
+          if (currentPatientNum >= 0 && currentPatientNum < (AverageSeverities.length)) {
+            if (AverageSeverities[currentPatientNum] <= 10) {
+                AverageSeverities[currentPatientNum] += 3;
+                System.out.println("I added 3");
+            }
+            if (AverageSeverities[currentPatientNum] > 10){
+              AverageSeverities[currentPatientNum] = 10;
+            }
+          }           
         }
 
         // Are in/entering labour 
         if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 345 && mouseY >= 325){
           System.out.println("Are in/entering labour");  
           // MOVE THEM TO THE TOP OF THE PRIOTITY LIST 
+          int currentPatientNum = -1; // Default value if not found
+          for (int i = 0; i < patientsNum.length; i++) {
+            
+              if (patientsNum[i] == currentPatient) {
+                  currentPatientNum = i;
+                  break;
+              }
+          }
+          if (currentPatientNum >= 0 && currentPatientNum < (AverageSeverities.length)) {
+              AverageSeverities[currentPatientNum] = 10;
+              System.out.println("I added 10");
+          }
         }
 
         // They are experiencing a shortness of breath 
         if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 380 && mouseY >= 360){
           System.out.println("They are experiencing a shortness of breath");
           // MOVE TO THE TOP OF THE LIST
+          int currentPatientNum = -1; // Default value if not found
+          for (int i = 0; i < patientsNum.length; i++) {
+            
+              if (patientsNum[i] == currentPatient) {
+                  currentPatientNum = i;
+                  break;
+              }
+          }
+          if (currentPatientNum >= 0 && currentPatientNum < (AverageSeverities.length)) {
+              AverageSeverities[currentPatientNum] = 10;
+          }
         }
 
         // They are developing an rash/are itchy
         if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 415 && mouseY >= 395){
           System.out.println("Developed an itchiness/rash");
-          // ADD 2.5 TO THE AVERAGE SEVERITY 
+          // ADD 1 TO THE AVERAGE SEVERITY 
+          int currentPatientNum = -1; // Default value if not found
+          for (int i = 0; i < patientsNum.length; i++) {
+            
+              if (patientsNum[i] == currentPatient) {
+                  currentPatientNum = i;
+                  break;
+              }
+          }
+          if (currentPatientNum >= 0 && currentPatientNum < (AverageSeverities.length)) {
+            if (AverageSeverities[currentPatientNum] <= 10) {
+                AverageSeverities[currentPatientNum] += 1;
+                System.out.println("I added 1");
+            }
+            if (AverageSeverities[currentPatientNum] > 10){
+              AverageSeverities[currentPatientNum] = 10;
+            }
+          } 
+          
         }
         
         // They have "other" symptomes
         if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 450 && mouseY >= 430){
           System.out.println("Other");
-          // ADD 1.5 TO THE AVERGAE SEVERITY
+          // ADD 1 TO THE AVERGAE SEVERITY
+          int currentPatientNum = -1; // Default value if not found
+          for (int i = 0; i < patientsNum.length; i++) {
+            
+              if (patientsNum[i] == currentPatient) {
+                  currentPatientNum = i;
+                  break;
+              }
+          }
+          if (currentPatientNum >= 0 && currentPatientNum < (AverageSeverities.length)) {
+            if (AverageSeverities[currentPatientNum] <= 10) {
+                AverageSeverities[currentPatientNum] += 3;
+                System.out.println("I added 1");
+            }
+            if (AverageSeverities[currentPatientNum] > 10){
+              AverageSeverities[currentPatientNum] = 10;
+            }
+          }  
         }
    }
 
