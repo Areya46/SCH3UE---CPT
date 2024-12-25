@@ -526,13 +526,13 @@ public class MySketch extends PApplet {
 
       fill(39, 60, 115);
       textSize(25);
-      text("Patient Reported Symptoms: ", 450, 355);
+      text("Patient Reported Symptoms: ", 450, 375);
 
 
       for (int i = 0; i < easySymptomsList[position-1].length; i++){
         fill(71, 87, 128);
         textSize(18);
-        text((easySymptomsList[position-1][i] +"     \t\t"+ symptomSeverities[position-1][i]),450, 380+(20*i));
+        text((easySymptomsList[position-1][i] +"     \t\t"+ symptomSeverities[position-1][i]),450, 400+(20*i));
       }
 
       fill(39, 60, 115);
