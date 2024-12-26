@@ -64,6 +64,10 @@ public class MySketch2 extends PApplet {
     double difference2;
     double difference3;
     double difference4;
+    int elpasedTime;
+    int startCountDown;
+    boolean blnStartTIMER;
+    boolean blnAddSymptom;
 
     // WelcomePage Variables
     PImage imgWelcomePage;
@@ -301,9 +305,6 @@ public class MySketch2 extends PApplet {
           }
         }
 
-
-
-
         if (blnShowNextButton){
           image(imgNextButton, 240,525);
           if (blnPatientEnteredNumber){
@@ -322,18 +323,25 @@ public class MySketch2 extends PApplet {
           blnShowNextButton = false;
         }
 
+        if (blnAddSymptom){
+          addSymptom(currentPatient);
+          blnShowNextButton = false;
+        }
+
 
         if (blnShowBackButton){
           image(imgBackButton, 45, 525);
         }
 
+        if (blnStartTIMER){
+          twoMinuteTimer();
+        }
 
     }
      
     public static void main(String[] args) {
         PApplet.main("MySketch");
     }
-
 
     public void welcomePage(){
         image(imgWelcomePage, 25, 30);
@@ -366,8 +374,6 @@ public class MySketch2 extends PApplet {
           }
       }
   }  
-
-
 
     public void loadPatientImages(){
 
@@ -402,7 +408,6 @@ public class MySketch2 extends PApplet {
 
 
     }
-
 
     public void patientNumber(){
         // Text saying to enter patient number below
@@ -440,9 +445,7 @@ public class MySketch2 extends PApplet {
         blnShowNextButton = true;
         blnShowHowTo = true;
 
-
     }
-
 
     public void patientGeneration(){
       int quantity = 20;
@@ -476,7 +479,6 @@ public class MySketch2 extends PApplet {
       text("Wait List", 1170 , 585);
     }
 
-
     public void howToPage(){
       image(imgHowToPage, 30, 75);
     }
@@ -504,12 +506,12 @@ public class MySketch2 extends PApplet {
 
       fill(39, 60, 115);
       textSize(25);
-      text("Likely Condition: ", 450, 155);
+      text("Likely Condition: ", 450 , 155);
 
 
       fill(71, 87, 128);
       textSize(20);
-      text(conditionsList[position-1],650, 155);
+      text(conditionsList[position-1],660, 155);
 
 
       fill(39, 60, 115);
@@ -535,8 +537,8 @@ public class MySketch2 extends PApplet {
 
       fill(39, 60, 115);
       textSize(25);
-      text("Average Severity:  ", 450, 480);
-      text(String.format("%.1f", AverageSeverities[position - 1]),650, 480);
+      text("Average Severity:  ", 450, 480 + 15);
+      text(String.format("%.1f", AverageSeverities[position - 1]),650 + 10, 480 + 15);
 
     }
 
@@ -620,7 +622,7 @@ public class MySketch2 extends PApplet {
           textSize(25);
           text("^", 715, (80+(25*i))+7);
         }
-        else{
+        else {
           fill(158, 131, 55);
           textSize(30);
           text("-", 700, 80+(25*i));
@@ -750,6 +752,33 @@ public class MySketch2 extends PApplet {
 
   }
 
+  public void addSymptom(int patientNumber){
+    int index = Arrays.stream(patientsNum).boxed().toList().indexOf(patientNumber);
+    if (index >= 0){
+      fill(39, 60, 115);
+      textSize(20);
+      text("Which of the following best", 40, 85);
+      text("described the another reason why", 40, 105);
+      text("you are here to see an emergency", 40, 125);
+      text("room doctor: ", 40, 145);
+
+      fill(71, 87, 128);
+      textSize(18);
+
+      fill(71, 87, 128);
+      textSize(18);
+      text("> Bleeding", 40, 175);
+      text("> Chest pain/Chest related issues", 40, 205);
+      text("> Feel light headed", 40, 240);
+      text("> Abrupt loss of strength in limbs", 40, 275);
+      text("> Sudden difficulty with speech", 40, 310);
+      text("> Are in/are entering labour", 40, 345);
+      text("> Shortness of breath", 40, 380);
+      text("> Developed an itchiness/rash", 40, 415);
+      text("> Other", 40, 450);
+    }
+  }
+
     public void symptomsPage1(){
       fill(13, 60, 117);
       textSize(30);
@@ -786,7 +815,12 @@ public class MySketch2 extends PApplet {
         symptomSeverities[index][0] += 1;
         Math.min(10, symptomSeverities[index][0] + 1);
         oldSeveritySymptom1 = severitySymptom1;
+        System.out.println(symptomSeverities);
       }
+    }
+
+    public void informationPage(){
+
     }
 
     public void mouseClicked(){
@@ -843,7 +877,7 @@ public class MySketch2 extends PApplet {
             showPatient = true;
             checkbutton = true;
           }
-          if (mouseX > 765 && mouseX < 785) {
+          if (mouseX > (width/3) && mouseX < 785) {
             ShowPatientInfo = true;
           }
         }
@@ -903,29 +937,114 @@ public class MySketch2 extends PApplet {
           blnSymptomsPage1 = false;
           blnUpdateSymptom = true;
         }
-
-
+        
+        // Do they want to update a symptom?
         if (blnSymptomsPage1 && mouseX >= 35 && mouseX <= (width/3 - 175) && mouseY >= 148 && mouseY <= 148 + 35){
           System.out.println("They ARE FEELING SOMTHING ELSE");
+          blnAddSymptom = true;
+          blnSymptomsPage1 = false;
         }
 
+        // They are bleeding
+        if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 175 && mouseY >= 155){
+          System.out.println("they are bleeding");
+          // ADD 2 TO AVERAGE SEVERITY 
+        }
+
+        // They have chest pain 
+        if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 205 && mouseY >= 185){
+          System.out.println("they have chest pain");
+          
+          int currentPatientNum = -1; // Default value if not found
+          for (int i = 0; i < patientsNum.length; i++) {
+            
+              if (patientsNum[i] == currentPatient) {
+                  currentPatientNum = i;
+                  break;
+              }
+          }
+          // ADD THREE TO AVERAGE SEVERITY
+          if (currentPatientNum >= 0 && currentPatientNum < (AverageSeverities.length)) {
+            if (AverageSeverities[currentPatientNum] <= 10) {
+                AverageSeverities[currentPatientNum] += 3;
+                System.out.println("I added 3");
+            }
+          }
+          else{
+            System.out.println("This patient is out of bounds" + AverageSeverities[currentPatientNum]);
+          }
+           
+        }
+
+        // They feel light headed 
+        if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 240 && mouseY >= 220){
+          System.out.println("they are feeling light headed");
+          // ADD 1 TO AVERGAE SEVERITY
+        }
+
+        // They feel a loss of strength in their limbs 
+        if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 275 && mouseY >= 255){
+          System.out.println("Abrupt loss of strength in limbs");
+          // ADD 3 TO AVERAGE SEVERITY
+        }
+
+        // Sudden difficulty with speech 
+        if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 310 && mouseY >= 290){
+          System.out.println("Sudden difficulty with speech");
+          // ADD THREE TO AVERAGE SEVERITY 
+        }
+
+        // Are in/entering labour 
+        if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 345 && mouseY >= 325){
+          System.out.println("Are in/entering labour");  
+          // MOVE THEM TO THE TOP OF THE PRIOTITY LIST 
+        }
+
+        // They are experiencing a shortness of breath 
+        if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 380 && mouseY >= 360){
+          System.out.println("They are experiencing a shortness of breath");
+          // MOVE TO THE TOP OF THE LIST
+        }
+
+        // They are developing an rash/are itchy
+        if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 415 && mouseY >= 395){
+          System.out.println("Developed an itchiness/rash");
+          // ADD 2.5 TO THE AVERAGE SEVERITY 
+        }
+        
+        // They have "other" symptomes
+        if (blnAddSymptom && mouseX >= 40 && mouseX <= (width/3 - 175) && mouseY <= 450 && mouseY >= 430){
+          System.out.println("Other");
+          // ADD 1.5 TO THE AVERGAE SEVERITY
+        }
    }
+
+      public void twoMinuteTimer(){
+        startCountDown = second();
+        elpasedTime = second() - startCountDown;
+        System.out.println(startCountDown);
+
+        if (elpasedTime >= startCountDown + 5){
+          updateSeverity1();
+        }
+
+
+      }
 
       public void mouseDragged(){
         if (blnUpdateSymptom && mouseX >= line0 && mouseX <= line10){
-          int index = Arrays.stream(patientsNum).boxed().toList().indexOf(currentPatient);
           if (mouseX >= severitySymptom1 - 10 && mouseX <= severitySymptom1 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
+            blnStartTIMER = true;
+            // Figure out the current itme 
+            //int startCountDown = second();
             oldSeveritySymptom1 = severitySymptom1; // Save the previous position
             severitySymptom1 = mouseX; // Update the new position
-            updateSeverity1();
+            // If two minutes has passed update the code 
+            // elpasedTime = second() - startCountDown;
+            // System.out.println(startCountDown);
           }
         }
       }
-
-      public void mouseReleased(){
-
-      }
-
     
    /*
       public void mouseDragged() {
