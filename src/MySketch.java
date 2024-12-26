@@ -15,6 +15,7 @@ public class MySketch extends PApplet {
     PImage imgNextButton;
     PImage imgBackButton;
     PImage imgHowToPage;
+    PImage imgLogo;
     boolean blnShowNextButton;
     boolean blnShowBackButton;
     boolean blnShowHowTo;
@@ -317,7 +318,6 @@ public class MySketch extends PApplet {
           }
         }
 
-
         if (blnUpdateSymptom){
           updateSymptoms(currentPatient);
           blnShowNextButton = false;
@@ -332,10 +332,6 @@ public class MySketch extends PApplet {
         if (blnShowBackButton){
           image(imgBackButton, 45, 525);
         }
-
-        //if (blnStartTIMER){
-          //twoMinuteTimer();
-        //}
 
     }
      
@@ -405,7 +401,6 @@ public class MySketch extends PApplet {
        // How to page text
        imgHowToPage = loadImage("Images/HowToPage.png");
        imgHowToPage.resize(340, 550);
-
 
     }
 
@@ -480,7 +475,24 @@ public class MySketch extends PApplet {
     }
 
     public void howToPage(){
-      image(imgHowToPage, 30, 75);
+      //fill(13, 60, 117);
+      //textSize(40);
+
+      // Display the list size
+      textSize(16);
+
+      // Display the list size
+      textSize(30);
+      int index = Arrays.stream(patientsNum).boxed().toList().indexOf(currentPatient);
+      if (index >= 0){
+        blnPatientEnteredNumber = true;
+        text(("Nice to meet you"), 50, 75);
+        text((firstNames[index] + "!"), 50, 105);
+        blnShowNextButton = true;
+        blnShowHowTo = true;
+      }
+
+      image(imgHowToPage, 30, 120);
     }
    
     public void patientInfo(int position){
@@ -800,6 +812,16 @@ public class MySketch extends PApplet {
       fill(13, 60, 117);
       textSize(20);
       text("New symptom", 75, 168);  
+
+      // Third heading 
+      fill(13,60, 117);
+      textSize(40);
+      text(">", 45, 110 + 60);
+
+
+      fill(13, 60, 117);
+      textSize(20);
+      text("Heart rate updater", 75, 168);  
    
     }
 
