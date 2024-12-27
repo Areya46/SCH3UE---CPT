@@ -314,13 +314,15 @@ public class MySketch extends PApplet {
 
         if (blnShowNextButton){
           image(imgNextButton, 240,525);
-          if (blnPatientEnteredNumber){
-            if (blnShowHowTo){
-              howToPage();
-            }
-          }
-          if(blnSymptomsPage1){
-            symptomsPage1();
+        }
+
+        if(blnSymptomsPage1){
+          symptomsPage1();
+        }
+
+        if (blnPatientEnteredNumber){
+          if (blnShowHowTo){
+            howToPage();
           }
         }
 
@@ -690,6 +692,7 @@ public class MySketch extends PApplet {
     }   
 
     public void updateSymptoms(int patientNumber) {
+      blnShowBackButton = true;
       int index = Arrays.stream(patientsNum).boxed().toList().indexOf(patientNumber);
       if (index >= 0) {
        
@@ -766,6 +769,9 @@ public class MySketch extends PApplet {
   }
 
     public void addSymptom(int patientNumber){
+
+    blnShowBackButton = true;
+    
     int index = Arrays.stream(patientsNum).boxed().toList().indexOf(patientNumber);
     if (index >= 0){
       fill(39, 60, 115);
@@ -793,6 +799,9 @@ public class MySketch extends PApplet {
   }
 
     public void updateHeartRate(){
+
+    blnShowBackButton = true;
+
     fill(13, 60, 117);
     textSize(20);
     text("Please enter your heart rate below; ", 40, 100);
@@ -831,6 +840,9 @@ public class MySketch extends PApplet {
   }
 
     public void symptomsPage1(){
+      blnShowNextButton = false;
+      blnShowBackButton = false;
+
       fill(13, 60, 117);
       textSize(30);
       text("Symptom Tracker", 40 + 30 ,70);
@@ -1001,6 +1013,23 @@ public class MySketch extends PApplet {
           }
         }
 
+        // Was back selected?
+        if (mouseX >= 45 && mouseX <= (45 + 125) && mouseY >= 525 && mouseY <= (525 + 30)){
+          if (blnUpdateSymptom){
+            blnSymptomsPage1 = true;
+            blnUpdateSymptom = false;
+            System.out.println("blnSymptomsPage1 =" + blnSymptomsPage1);
+            System.out.println("blnUpdateSymptom = " + blnUpdateSymptom);
+          }
+          if (blnAddSymptom){
+            blnSymptomsPage1 = true;
+            blnAddSymptom = false;
+          }
+          if (blnHeartRate){
+            blnSymptomsPage1 = true;
+            blnHeartRate = false;
+          }
+        }
         // Do they want to alter a pre-existing symtom?
         if (blnSymptomsPage1 && mouseX >= 35 && mouseX <= (width/3 - 100) && mouseY >= 90 && mouseY <= 90 + 35 ){
           System.out.println("THEY WANT TO UPDATE");
