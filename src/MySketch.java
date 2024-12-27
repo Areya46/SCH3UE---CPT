@@ -23,8 +23,10 @@ public class MySketch extends PApplet {
     boolean blnPatientEnteredNumber;
     boolean blnSymptomsPage1;
     boolean blnUpdateSymptom;
+    boolean blnHeartRate;
     double position = 545.0/20.0;
     int anotherNumber;
+    int heartrate = 80;
     int line0 = 45;
     int line1 = 45 + 35;
     int line2 = 45 + 65;
@@ -306,6 +308,10 @@ public class MySketch extends PApplet {
           }
         }
 
+        if (blnHeartRate){
+          updateHeartRate();
+        }
+
         if (blnShowNextButton){
           image(imgNextButton, 240,525);
           if (blnPatientEnteredNumber){
@@ -327,7 +333,6 @@ public class MySketch extends PApplet {
           addSymptom(currentPatient);
           blnShowNextButton = false;
         }
-
 
         if (blnShowBackButton){
           image(imgBackButton, 45, 525);
@@ -604,53 +609,54 @@ public class MySketch extends PApplet {
       for (int i = 0; i < firstNames.length; i++) {
           WaitList[i] = firstNames[indices[i]] +" "+ lastNames[indices[i]];  // Assign names to WaitList based on sorted indices
       }
-
   }
   
-    public void showWaitList(){
-      fill(71, 87, 128);
-      textSize(35);
-      text("Waiting List",450, 50);
-      fill(13, 60, 117);
-      textSize(40);
-      text("<", 1150, 50);
+    public void showWaitList() {
+    fill(71, 87, 128);
+    textSize(35);
+    text("Waiting List", 450, 50);
+    fill(13, 60, 117);
+    textSize(40);
+    text("<", 1150, 50);
 
-      for (int i = 0; i <= 19; i++){
-        //int indexInShowedWaitList = Arrays.asList(ShowedWaitList).indexOf(WaitList[i]);
-        
-        if (Dirrection[i].equals("Up")){
-          fill(13, 110, 42);
-          textSize(25);
-          text("^", 700, (80+(25*i))+5);
-          fill(13, 60, 117);
-          textSize(20);
-          text("v", 715, (80+(25*i))-1);          
+    for (int i = 0; i <= 19; i++) {
+        // Direction indicators
+        if (Dirrection[i].equals("Up")) {
+            fill(13, 110, 42);
+            textSize(25);
+            text("^", 700, (80 + (25 * i)) + 5);
+            fill(13, 60, 117);
+            textSize(20);
+            text("v", 715, (80 + (25 * i)) - 1);
+        } else if (Dirrection[i].equals("Down")) {
+            fill(110, 13, 13);
+            textSize(20);
+            text("v", 700, 80 + (25 * i));
+            fill(13, 60, 117);
+            textSize(25);
+            text("^", 715, (80 + (25 * i)) + 7);
+        } else {
+            fill(158, 131, 55);
+            textSize(30);
+            text("-", 700, 80 + (25 * i));
+            Dirrection[i] = "";
         }
-        else if (Dirrection[i].equals("Down")){
-          fill(110, 13, 13);
-          textSize(20);
-          text("v", 700, 80+(25*i));
-          fill(13, 60, 117);
-          textSize(25);
-          text("^", 715, (80+(25*i))+7);
-        }
-        else {
-          fill(158, 131, 55);
-          textSize(30);
-          text("-", 700, 80+(25*i));
-          Dirrection[i] = "";
-        }
-      }
 
-      for(int i = 0; i <= 19; i++){
+        // Display patient information
         fill(71, 87, 128);
         textSize(19);
-        text(((i+1)+": " + ShowedWaitList[i]),450, 80+(25*i));
-        text(">", 770, 80+(25*i));
-      }
+        text(((i + 1) + ": " + ShowedWaitList[i]), 450, 80 + (25 * i));
+        text(">", 770, 80 + (25 * i));
 
+        // Check average severity and draw star if needed
+        if (AverageSeverities[i] == 10) { // Assuming alignment of `AverageSeverities` and `ShowedWaitList`
+            fill(252, 165, 3); // Orange color for the star
+            textSize(30);
+            text("*", width/2, 80 + (25 * i)); // Adjust x position if needed
+        }
     }
-
+}
+  
     public void switchPosition(int position){
       System.out.println("Button Clicked for: "+ShowedWaitList[position]);
       if ((Dirrection[position]).equals("Up") ){
@@ -759,7 +765,7 @@ public class MySketch extends PApplet {
 
   }
 
-  public void addSymptom(int patientNumber){
+    public void addSymptom(int patientNumber){
     int index = Arrays.stream(patientsNum).boxed().toList().indexOf(patientNumber);
     if (index >= 0){
       fill(39, 60, 115);
@@ -784,6 +790,44 @@ public class MySketch extends PApplet {
       text("> Developed an itchiness/rash", 40, 415);
       text("> Other", 40, 450);
     }
+  }
+
+    public void updateHeartRate(){
+    fill(13, 60, 117);
+    textSize(20);
+    text("Please enter your heart rate below; ", 40, 100);
+    text("Heart Rate: ", 40 ,130);
+    textSize(40);
+    text("^", 90, 175);
+    text(heartrate + " BPM", 120, 175);
+    text("v", 210 + 80, 170);
+
+    if (heartrate <= 60 || heartrate >= 100){
+      textSize(25);
+      text("PLEASE SEE THE NURSE", 40, 270);
+      text("AT THE NURSES STATION", 40,300);
+      text("NOW AND SHOW HER THIS", 40, 330);
+      text("MESSAGE", 40, 360);
+
+      // Update the average patient severity
+      int currentPatientNum = -1; // Default value if not found
+      for (int i = 0; i < patientsNum.length; i++) {
+      if (patientsNum[i] == currentPatient) {
+        currentPatientNum = i;
+        break;
+      }
+      }
+      // ADD THREE TO AVERAGE SEVERITY
+      if (currentPatientNum >= 0 && currentPatientNum < (AverageSeverities.length)) {
+        AverageSeverities[currentPatientNum] = 10;
+      }  
+
+    }
+
+    textSize(15);
+    text("(Please enter the data based on the reading ", 40, 400);
+    text("on your smartwatch or other BPM reading", 40, 420);
+    text("device)", 40, 440);
   }
 
     public void symptomsPage1(){
@@ -816,12 +860,12 @@ public class MySketch extends PApplet {
       // Third heading 
       fill(13,60, 117);
       textSize(40);
-      text(">", 45, 110 + 60);
+      text(">", 45, 220);
 
 
       fill(13, 60, 117);
       textSize(20);
-      text("Heart rate updater", 75, 168);  
+      text("Heart rate tracker", 75, 220);  
    
     }
 
@@ -857,7 +901,22 @@ public class MySketch extends PApplet {
           }
         }
 
+        if (checkbutton) {
+          if (mouseX > 450 && mouseX < 475 && mouseY > 20 && mouseY < 565) {
+              for (int i = 0; i < 20; i++) {
+                  if (mouseY < 20 + (i * position)) {
+                      number = i; // Number tracks the patient being clicked
+                      break;
+                  }
+              }
+              // Perform actions for the selected patient
+              showPatient = false;
+              checkbutton = false;
+              patientscreen = true;
+          }
+      }      
 
+        /* 
         if (checkbutton){
           if (mouseX > 450 && mouseX < 475 && mouseY > 20 && mouseY < 565){
            
@@ -871,10 +930,9 @@ public class MySketch extends PApplet {
             showPatient = false;
             checkbutton = false;
             patientscreen = true;
-
-
           }
         }
+        */
 
         if (mouseX >= 1150 && mouseX <= 1300 && mouseY >= 550 && mouseY <= 600){
           showPatient = false;
@@ -943,7 +1001,6 @@ public class MySketch extends PApplet {
           }
         }
 
-
         // Do they want to alter a pre-existing symtom?
         if (blnSymptomsPage1 && mouseX >= 35 && mouseX <= (width/3 - 100) && mouseY >= 90 && mouseY <= 90 + 35 ){
           System.out.println("THEY WANT TO UPDATE");
@@ -956,6 +1013,20 @@ public class MySketch extends PApplet {
           System.out.println("They ARE FEELING SOMTHING ELSE");
           blnAddSymptom = true;
           blnSymptomsPage1 = false;
+        }
+
+        // They are entering the screen regarding the heart rate 
+        if (blnSymptomsPage1 && mouseX >= 35 && mouseX <= (width/3 - 175) && mouseY >= 200 && mouseY <= 200 + 35){
+          System.out.println("Update heart rate");
+          blnSymptomsPage1 = false;
+          blnHeartRate = true;
+        }
+
+        if (blnHeartRate && mouseX >= 90 && mouseX <= 130 && mouseY >= 145 && mouseY <= 185){
+          heartrate += 1;
+        }
+        if (blnHeartRate && mouseX >= 205 + 80 && mouseX <= 235 + 80 && mouseY >= 145 && mouseY <= 185){
+          heartrate -= 1;
         }
 
         // They are bleeding
