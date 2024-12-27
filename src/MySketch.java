@@ -55,10 +55,14 @@ public class MySketch extends PApplet {
     int severitySymptom2 = 45 + 155;
     int severitySymptom3 = 45 + 155;
     int severitySymptom4 = 45 + 155; 
-    double oldSeveritySymptom1;
-    double oldSeveritySymptom2;
-    double oldSeveritySymptom3;
-    double oldSeveritySymptom4;
+    double oldSeveritySymptom1 = severitySymptom1;
+    double oldSeveritySymptom2 = severitySymptom2;
+    double oldSeveritySymptom3 = severitySymptom3;
+    double oldSeveritySymptom4 = severitySymptom4;
+    double newSeverity1;
+    double newSeverity2;
+    double newSeverity3;
+    double newSeverity4;
     double changeInSeverity1;
     double changeInSeverity2;
     double changeInSeverity3;
@@ -99,6 +103,7 @@ public class MySketch extends PApplet {
     int checkingPatientPosition;
     int[] patientsNum = new int[20];
     boolean start = true;
+
     String[] firstNames = {
         "John", "Emily", "Michael", "Sophia", "David", "Olivia",
         "James", "Isabella", "Daniel", "Mia", "Ethan", "Ava",
@@ -327,7 +332,7 @@ public class MySketch extends PApplet {
         }
 
         if (blnUpdateSymptom){
-          updateSymptoms(currentPatient);
+          updateSymptoms(currentPatient, checkingPatientPosition);
           blnShowNextButton = false;
         }
 
@@ -691,7 +696,7 @@ public class MySketch extends PApplet {
       text(("Severity: "+AverageSeverities[InfoIndex] +"        Category: "+ categoriesList[InfoIndex]), 800, 80+(25*position));
     }   
 
-    public void updateSymptoms(int patientNumber) {
+    public void updateSymptoms(int patientNumber, int position) {
       blnShowBackButton = true;
       int index = Arrays.stream(patientsNum).boxed().toList().indexOf(patientNumber);
       if (index >= 0) {
@@ -710,7 +715,7 @@ public class MySketch extends PApplet {
           int yvalue = 140;
           int xvalue = 45;
 
-
+          /*
           for (String symptom : easySymptomsList[index]) {
               //text("- " + symptom, 45, 100 + (easySymptomsList[index].length - 1) * 20); // Adjust position
               text("- " + symptom, 45, yvalue);
@@ -742,9 +747,14 @@ public class MySketch extends PApplet {
               //ellipse(45 + 155, yvalue + 20, 10, 10);
 
               yvalue += 80;
-          }
-
-          for (String symptom : easySymptomsList[index]){
+          }      
+          */
+          
+          for (int i = 0; i < easySymptomsList[position-1].length; i++){
+            fill(71, 87, 128);
+            textSize(18);
+            text((easySymptomsList[position-1][i] +"     \t\t"+ symptomSeverities[position-1][i]),200, yvalue + 20*i);
+            yvalue += 80;
           }
 
           // Patient circle 1
@@ -904,7 +914,6 @@ public class MySketch extends PApplet {
           isTyping = false;
         }
 
-
         if (patientscreen){
           if (mouseX > 1100 && mouseX < 1200 && mouseY > 20 && mouseY < 60) {
             patientscreen = false;
@@ -1036,7 +1045,59 @@ public class MySketch extends PApplet {
           blnSymptomsPage1 = false;
           blnUpdateSymptom = true;
         }
+
         
+        // They want to update symptom1
+        if (mouseX >= circleX0 - 10 && mouseX <= circleX0 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
+          severitySymptom1 = circleX0;     
+        }
+        else if (mouseX >= circleX1 - 10 && mouseX <= circleX1 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
+          severitySymptom1 = circleX1;
+          
+        }
+        else if (mouseX >= circleX2 - 10 && mouseX <= circleX2 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
+          severitySymptom1 = circleX2;
+        }
+        else if (mouseX >= circleX3 - 10 && mouseX <= circleX3 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
+          severitySymptom1 = circleX3;
+        }
+        else if (mouseX >= circleX4 - 10 && mouseX <= circleX4 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
+          severitySymptom1 = circleX4;
+        }
+        else if (mouseX >= circleX5 - 10 && mouseX <= circleX5 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
+          severitySymptom1 = circleX5;
+        }
+        else if (mouseX >= circleX6 - 10 && mouseX <= circleX6 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
+          severitySymptom1 = circleX6;
+        }
+        else if (mouseX >= circleX7 - 10 && mouseX <= circleX7 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
+          severitySymptom1 = circleX7;
+        }
+        else if (mouseX >= circleX8 - 10 && mouseX <= circleX8 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
+          severitySymptom1 = circleX8;
+        }
+        else if (mouseX >= circleX9 - 10 && mouseX <= circleX9 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
+          severitySymptom1 = circleX9;
+        }
+        else if (mouseX >= circleX10 - 10 && mouseX <= circleX10 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
+          severitySymptom1 = circleX10;
+        }
+
+        // Severity of symptom 2
+        if (mouseX >= severitySymptom2 - 10 && mouseX <= severitySymptom2 + 10 && mouseY >= (240) - 10 && mouseY <= (240) + 10){
+          
+        } 
+        
+        // Severity of symptom 3
+        if (mouseX >= severitySymptom3 - 10 && mouseX <= severitySymptom3 + 10 && mouseY >= (320) - 10 && mouseY <= (320) + 10){
+
+        }
+
+        // Severity of symptom 4
+        if (mouseX >= severitySymptom4 - 10 && mouseX <= severitySymptom4 + 10 && mouseY >= (400) - 10 && mouseY <= (400) + 10){
+
+        }
+
         // Do they want to update a symptom?
         if (blnSymptomsPage1 && mouseX >= 35 && mouseX <= (width/3 - 175) && mouseY >= 148 && mouseY <= 148 + 35){
           System.out.println("They ARE FEELING SOMTHING ELSE");
@@ -1256,33 +1317,9 @@ public class MySketch extends PApplet {
             }
           }  
         }
+
    }
 
-   /* 
-      public void twoMinuteTimer(){
-        startCountDown = second();
-        elpasedTime = second() - startCountDown;
-        System.out.println(startCountDown);
-
-        if (elpasedTime >= startCountDown + 5){
-          updateSeverity1();
-        }
-
-
-      }
-      */
-
-      public void mouseDragged(){
-        if (blnUpdateSymptom && mouseX >= line0 && mouseX <= line10){
-          if (mouseX >= severitySymptom1 - 10 && mouseX <= severitySymptom1 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
-            blnStartTIMER = true;
-            //oldSeveritySymptom1 = severitySymptom1; // Save the previous position
-            severitySymptom1 = mouseX; // Update the new position
-            
-          }
-        }
-      }
-    
    /*
       public void mouseDragged() {
         if (blnUpdateSymptom && mouseX >= line0 && mouseX <= line10) {
