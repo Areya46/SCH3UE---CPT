@@ -697,6 +697,8 @@ public class MySketch extends PApplet {
     }   
 
     public void updateSymptoms(int patientNumber, int position) {
+      System.out.println("STARTED UPDATING???");
+      
       int index = Arrays.stream(patientsNum).boxed().toList().indexOf(patientNumber);
       
       if (index >= 0) {
@@ -719,11 +721,13 @@ public class MySketch extends PApplet {
           text("Patient number not found.", 450, 60);
       }
       
-      for (int i = 0; i < easySymptomsList[position-1].length; i++){
+      for (int i = 0; i < 4; i++){
+        System.out.println(position);
         fill(71, 87, 128);
         textSize(18);
-        text((symptomSeverities[position-1][i]),90, 400+(20*i));
+        text((symptomSeverities[position][i]),90, 400+(20*i));
       }    
+      System.out.println("Line 732 ok");
 
   }
 
@@ -919,13 +923,13 @@ public class MySketch extends PApplet {
     }
 
     public void updateSeverity1(){
+      System.out.println("GOT HERE");
       int index = Arrays.stream(patientsNum).boxed().toList().indexOf(currentPatient);
       double change1 = (severitySymptom1 - oldSeveritySymptom1);
       if (change1 <= 40){
         symptomSeverities[index][0] += 1;
         Math.min(10, symptomSeverities[index][0] + 1);
         oldSeveritySymptom1 = severitySymptom1;
-        System.out.println(symptomSeverities);
       }
     }
 
