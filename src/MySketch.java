@@ -332,7 +332,7 @@ public class MySketch extends PApplet {
         }
 
         if (blnUpdateSymptom){
-          updateSymptoms(currentPatient, checkingPatientPosition);
+          updateSymptoms(currentPatient, number);
           blnShowNextButton = false;
         }
 
@@ -697,25 +697,56 @@ public class MySketch extends PApplet {
     }   
 
     public void updateSymptoms(int patientNumber, int position) {
-      blnShowBackButton = true;
+      int index = Arrays.stream(patientsNum).boxed().toList().indexOf(patientNumber);
+      
+      if (index >= 0) {
+
+          fill(39, 60, 115);
+          textSize(25);
+          text("Symptoms: ", 40, 110);
+
+          fill(71, 87, 128);
+          textSize(18);
+          int yvalue = 140;
+
+          for (String symptom : easySymptomsList[index]) {
+              //text("- " + symptom, 45, 100 + (easySymptomsList[index].length - 1) * 20); // Adjust position
+              text("- " + symptom, 45, yvalue);
+              yvalue += 80;
+          }
+
+      } else {
+          text("Patient number not found.", 450, 60);
+      }
+      
+      for (int i = 0; i < easySymptomsList[position-1].length; i++){
+        fill(71, 87, 128);
+        textSize(18);
+        text((symptomSeverities[position-1][i]),90, 400+(20*i));
+      }    
+
+  }
+
+    /*
+    public void updateSymptoms(int patientNumber) {
       int index = Arrays.stream(patientsNum).boxed().toList().indexOf(patientNumber);
       if (index >= 0) {
-       
+
         //String namePatient = firstNames[index] + " " + lastNames[index];
           //fill(13, 60, 117);
           //textSize(40);
           //text("Patient: " + namePatient, 35, 60);
-         
+
           fill(39, 60, 115);
           textSize(25);
           text("Symptoms: ", 40, 110);
- 
+
           fill(71, 87, 128);
           textSize(18);
           int yvalue = 140;
           int xvalue = 45;
 
-          /*
+
           for (String symptom : easySymptomsList[index]) {
               //text("- " + symptom, 45, 100 + (easySymptomsList[index].length - 1) * 20); // Adjust position
               text("- " + symptom, 45, yvalue);
@@ -747,14 +778,9 @@ public class MySketch extends PApplet {
               //ellipse(45 + 155, yvalue + 20, 10, 10);
 
               yvalue += 80;
-          }      
-          */
-          
-          for (int i = 0; i < easySymptomsList[position-1].length; i++){
-            fill(71, 87, 128);
-            textSize(18);
-            text((easySymptomsList[position-1][i] +"     \t\t"+ symptomSeverities[position-1][i]),200, yvalue + 20*i);
-            yvalue += 80;
+          }
+
+          for (String symptom : easySymptomsList[index]){
           }
 
           // Patient circle 1
@@ -777,6 +803,7 @@ public class MySketch extends PApplet {
       }
 
   }
+  */
 
     public void addSymptom(int patientNumber){
 
