@@ -637,7 +637,7 @@ public class MySketch extends PApplet {
         if (AverageSeverities[i] == 10) { // Assuming alignment of `AverageSeverities` and `ShowedWaitList`
             fill(252, 165, 3); // Orange color for the star
             textSize(50);
-            text("*", width/2, 80 + (25 * i)); // Adjust x position if needed
+            text("*", (width/2)+5, 100 + (25 * i)); // Adjust x position if needed
         }
     }
 }
