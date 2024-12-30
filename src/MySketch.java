@@ -658,7 +658,7 @@ public class MySketch extends PApplet {
         // Check average severity and draw star if needed
         if (AverageSeverities[i] == 10) { // Assuming alignment of `AverageSeverities` and `ShowedWaitList`
             fill(252, 165, 3); // Orange color for the star
-            textSize(30);
+            textSize(50);
             text("*", width/2, 80 + (25 * i)); // Adjust x position if needed
         }
     }
@@ -695,41 +695,6 @@ public class MySketch extends PApplet {
       int InfoIndex = Arrays.asList(FullNames).indexOf(ShowedWaitList[position]);
       text(("Severity: "+AverageSeverities[InfoIndex] +"        Category: "+ categoriesList[InfoIndex]), 800, 80+(25*position));
     }   
-
-    public void updateSymptoms(int patientNumber, int position) {
-      System.out.println("STARTED UPDATING???");
-      
-      int index = Arrays.stream(patientsNum).boxed().toList().indexOf(patientNumber);
-      
-      if (index >= 0) {
-
-          fill(39, 60, 115);
-          textSize(25);
-          text("Symptoms: ", 40, 110);
-
-          fill(71, 87, 128);
-          textSize(18);
-          int yvalue = 140;
-
-          for (String symptom : easySymptomsList[index]) {
-              //text("- " + symptom, 45, 100 + (easySymptomsList[index].length - 1) * 20); // Adjust position
-              text("- " + symptom, 45, yvalue);
-              yvalue += 80;
-          }
-
-      } else {
-          text("Patient number not found.", 450, 60);
-      }
-      
-      for (int i = 0; i < 4; i++){
-        System.out.println(position);
-        fill(71, 87, 128);
-        textSize(18);
-        text((symptomSeverities[position][i]),90, 400+(20*i));
-      }    
-      System.out.println("Line 732 ok");
-
-  }
 
     /*
     public void updateSymptoms(int patientNumber) {
@@ -933,7 +898,55 @@ public class MySketch extends PApplet {
       }
     }
 
+    public void updateSymptoms(int patientNumber, int position) {      
+      int index = Arrays.stream(patientsNum).boxed().toList().indexOf(patientNumber);
+      
+      if (index >= 0) {
+
+          fill(39, 60, 115);
+          textSize(25);
+          text("Symptoms: ", 40, 110);
+
+          fill(71, 87, 128);
+          textSize(18);
+          int yvalue = 140;
+
+          for (String symptom : easySymptomsList[index]) {
+              text("- " + symptom, 45, yvalue);
+              yvalue += 80;
+          }
+
+      } else {
+          text("Patient number not found.", 450, 60);
+      }
+      
+      for (int i = 0; i < 4; i++){
+        fill(71, 87, 128);
+        textSize(25);
+        text("^ " + (symptomSeverities[position][i]),145, 185+(80*i));
+        text(" v",195, 180+(80*i));
+      }    
+
+  }
+
     public void mouseClicked(){
+
+      if (blnUpdateSymptom){
+        for (int i = 0; i < 4; i++){
+          if (mouseX >= 135 && mouseX <= 155 && mouseY >= 175+(80*i) && mouseY <= 195+(80*i)){
+            System.out.println("hit");
+          }
+        }
+      }
+
+      if (blnUpdateSymptom && mouseX >= 120 && mouseX >= 135 && mouseY >= 175 && mouseY <= 195){
+        System.out.println("hit");
+        if (symptomSeverities[number][0] <= 10){
+          symptomSeverities[number][0] += 1;
+          System.out.println("updated severity");
+        }
+      }
+
         if (mouseX >= 100 && mouseX <= 320 && mouseY >= 330 && mouseY <= 380){
             blnGetStartedselected = true;
         }
@@ -1075,58 +1088,6 @@ public class MySketch extends PApplet {
           System.out.println("THEY WANT TO UPDATE");
           blnSymptomsPage1 = false;
           blnUpdateSymptom = true;
-        }
-
-        
-        // They want to update symptom1
-        if (mouseX >= circleX0 - 10 && mouseX <= circleX0 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
-          severitySymptom1 = circleX0;     
-        }
-        else if (mouseX >= circleX1 - 10 && mouseX <= circleX1 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
-          severitySymptom1 = circleX1;
-          
-        }
-        else if (mouseX >= circleX2 - 10 && mouseX <= circleX2 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
-          severitySymptom1 = circleX2;
-        }
-        else if (mouseX >= circleX3 - 10 && mouseX <= circleX3 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
-          severitySymptom1 = circleX3;
-        }
-        else if (mouseX >= circleX4 - 10 && mouseX <= circleX4 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
-          severitySymptom1 = circleX4;
-        }
-        else if (mouseX >= circleX5 - 10 && mouseX <= circleX5 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
-          severitySymptom1 = circleX5;
-        }
-        else if (mouseX >= circleX6 - 10 && mouseX <= circleX6 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
-          severitySymptom1 = circleX6;
-        }
-        else if (mouseX >= circleX7 - 10 && mouseX <= circleX7 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
-          severitySymptom1 = circleX7;
-        }
-        else if (mouseX >= circleX8 - 10 && mouseX <= circleX8 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
-          severitySymptom1 = circleX8;
-        }
-        else if (mouseX >= circleX9 - 10 && mouseX <= circleX9 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
-          severitySymptom1 = circleX9;
-        }
-        else if (mouseX >= circleX10 - 10 && mouseX <= circleX10 + 10 && mouseY >= (140 + 20) - 10 && mouseY <= (140 + 20) + 10){
-          severitySymptom1 = circleX10;
-        }
-
-        // Severity of symptom 2
-        if (mouseX >= severitySymptom2 - 10 && mouseX <= severitySymptom2 + 10 && mouseY >= (240) - 10 && mouseY <= (240) + 10){
-          
-        } 
-        
-        // Severity of symptom 3
-        if (mouseX >= severitySymptom3 - 10 && mouseX <= severitySymptom3 + 10 && mouseY >= (320) - 10 && mouseY <= (320) + 10){
-
-        }
-
-        // Severity of symptom 4
-        if (mouseX >= severitySymptom4 - 10 && mouseX <= severitySymptom4 + 10 && mouseY >= (400) - 10 && mouseY <= (400) + 10){
-
         }
 
         // Do they want to update a symptom?
