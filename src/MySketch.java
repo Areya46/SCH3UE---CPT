@@ -487,9 +487,6 @@ public class MySketch extends PApplet {
     }
 
     public void howToPage(){
-      //fill(13, 60, 117);
-      //textSize(40);
-
       // Display the list size
       textSize(16);
 
@@ -504,7 +501,23 @@ public class MySketch extends PApplet {
         blnShowHowTo = true;
       }
 
-      image(imgHowToPage, 30, 120);
+      //image(imgHowToPage, 30, 120);
+      fill(13, 60, 117);
+      textSize(20);
+      text("Welcome to Life LinkER!", 45, 60 + 90);
+      text("Your fast and efficient way to ", 45, 90 + 90);
+      text("keep your healthcare providers ", 45, 120 + 90);
+      text("updated. You will be asked to", 45, 150 + 90);
+      text("rate the intensity of what you ", 45, 180 + 90);
+      text("are experiencing on a scale", 45, 210 + 90);
+      text("from 0 to 10 and enter in any", 45, 240 + 90);
+      text("other infromation that is ", 45, 270 + 90);
+      text("applicable to your situation, ", 45, 300 + 90);
+      text("including your heart rate if you", 45, 330 + 90);
+      text("have a device that measures it", 45, 360 + 90);
+      text("(for instance; an apple watch or", 45, 390 + 90);
+      text("fit bit).", 45, 390 + 120);
+
     }
    
     public void patientInfo(int position){
