@@ -448,11 +448,11 @@ public class MySketch extends PApplet {
           blnPatientEnteredNumber = true;
           text(("Nice to meet you"), 50, 450);
           text((firstNames[index] + "!"), 50, 480);
-          blnShowNextButton = true;
+          blnShowNextButton = false;
           blnShowHowTo = true;
         }
        
-        blnShowNextButton = true;
+        blnShowNextButton = false;
         blnShowHowTo = true;
 
     }
@@ -828,6 +828,7 @@ public class MySketch extends PApplet {
     }
 
     public void updateSymptoms(int patientNumber, int position) {      
+      blnShowBackButton = true;
 
       int index = Arrays.stream(patientsNum).boxed().toList().indexOf(patientNumber);
       
@@ -865,7 +866,7 @@ public class MySketch extends PApplet {
 
       // first symptom
       if (blnUpdateSymptom && mouseX >= 135 && mouseX <= 160 && mouseY <= 185 && mouseY >= 155){
-        if (symptomSeverities[originalNum][0] < 1){
+        if (symptomSeverities[originalNum][0] < 10){
           symptomSeverities[originalNum][0] += 1;
           System.out.println("up " + symptomSeverities[originalNum][0]);
         }
@@ -876,18 +877,47 @@ public class MySketch extends PApplet {
           System.out.println("down " + symptomSeverities[originalNum][0]);
         }
       }
-
-      /*
-      if (mouseX >= 135 && mouseX <= 155 && mouseY >= 175 && mouseY <= 195)
-      System.out.println("hit");
-
-      if (blnUpdateSymptom && mouseX >= 120 && mouseX >= 135 && mouseY >= 175 && mouseY <= 195){
-        if (symptomSeverities[originalNum][0] <= 10){
-          symptomSeverities[originalNum][0] -= 1;
-          System.out.println("updated severity, new severity" + symptomSeverities[originalNum][0]);
+      // second symptom
+      if (blnUpdateSymptom && mouseX >= 135 && mouseX <= 160 && mouseY <= 185 + 80 && mouseY >= 155 + 80){
+        if (symptomSeverities[originalNum][1] < 10){
+          symptomSeverities[originalNum][1] += 1;
+          System.out.println("up " + symptomSeverities[originalNum][1]);
         }
       }
-      */
+      if (blnUpdateSymptom && mouseX >= 185 && mouseX <= 215 && mouseY <= 185 + 80 && mouseY >= 155 + 80){
+        if (symptomSeverities[originalNum][1] > 0){
+          symptomSeverities[originalNum][1] -= 1;
+          System.out.println("down " + symptomSeverities[originalNum][1]);
+        }
+      }
+
+      // Third Symptom
+      if (blnUpdateSymptom && mouseX >= 135 && mouseX <= 160 && mouseY <= 185 + 160 && mouseY >= 155 + 160){
+        if (symptomSeverities[originalNum][2] < 10){
+          symptomSeverities[originalNum][2] += 1;
+          System.out.println("up " + symptomSeverities[originalNum][2]);
+        }
+      }
+      if (blnUpdateSymptom && mouseX >= 185 && mouseX <= 215 && mouseY <= 185 + 160 && mouseY >= 155 + 160){
+        if (symptomSeverities[originalNum][2] > 0){
+          symptomSeverities[originalNum][2] -= 1;
+          System.out.println("down " + symptomSeverities[originalNum][2]);
+        }
+      }
+
+      // Fourth Symptom
+      if (blnUpdateSymptom && mouseX >= 135 && mouseX <= 160 && mouseY <= 185 + 240 && mouseY >= 155 + 240){
+        if (symptomSeverities[originalNum][3] < 10){
+          symptomSeverities[originalNum][3] += 1;
+          System.out.println("up " + symptomSeverities[originalNum][3]);
+        }
+      }
+      if (blnUpdateSymptom && mouseX >= 185 && mouseX <= 215 && mouseY <= 185 + 240 && mouseY >= 155 + 240){
+        if (symptomSeverities[originalNum][3] > 0){
+          symptomSeverities[originalNum][3] -= 1;
+          System.out.println("down " + symptomSeverities[originalNum][3]);
+        }
+      }
 
         if (mouseX >= 100 && mouseX <= 320 && mouseY >= 330 && mouseY <= 380){
             blnGetStartedselected = true;
@@ -924,24 +954,6 @@ public class MySketch extends PApplet {
               patientscreen = true;
           }
       }      
-
-        /* 
-        if (checkbutton){
-          if (mouseX > 450 && mouseX < 475 && mouseY > 20 && mouseY < 565){
-           
-            for(int i = 0; i < 20; i++){
-              if(mouseY < 20+(i*position)){
-                number = i;
-                break;
-              }
-            }
-           
-            showPatient = false;
-            checkbutton = false;
-            patientscreen = true;
-          }
-        }
-        */
 
         if (mouseX >= 1150 && mouseX <= 1300 && mouseY >= 550 && mouseY <= 600){
           showPatient = false;
