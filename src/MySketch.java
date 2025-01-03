@@ -91,6 +91,7 @@ public class MySketch extends PApplet {
 
     int amount = 0;
     int number;
+    int otherThing;
     int originalNum = number;
     boolean showname = true;
     boolean checkbutton = true;
@@ -831,6 +832,7 @@ public class MySketch extends PApplet {
       blnShowBackButton = true;
 
       int index = Arrays.stream(patientsNum).boxed().toList().indexOf(patientNumber);
+      otherThing = index;
       
       if (index >= 0) {
 
@@ -854,7 +856,7 @@ public class MySketch extends PApplet {
       for (int i = 0; i < 4; i++){
         fill(71, 87, 128);
         textSize(25);
-        text("^ " + (symptomSeverities[position][i]),145, 185+(80*i));
+        text("^ " + (symptomSeverities[index][i]),145, 185+(80*i));
         text(" v",195, 180+(80*i));
       }    
 
@@ -866,56 +868,56 @@ public class MySketch extends PApplet {
 
       // first symptom
       if (blnUpdateSymptom && mouseX >= 135 && mouseX <= 160 && mouseY <= 185 && mouseY >= 155){
-        if (symptomSeverities[originalNum][0] < 10){
-          symptomSeverities[originalNum][0] += 1;
-          System.out.println("up " + symptomSeverities[originalNum][0]);
+        if (symptomSeverities[otherThing][0] < 10){
+          symptomSeverities[otherThing][0] += 1;
+          System.out.println("up " + symptomSeverities[otherThing][0]);
         }
       }
       if (blnUpdateSymptom && mouseX >= 185 && mouseX <= 215 && mouseY <= 185 && mouseY >= 155){
-        if (symptomSeverities[originalNum][0] > 0){
-          symptomSeverities[originalNum][0] -= 1;
-          System.out.println("down " + symptomSeverities[originalNum][0]);
+        if (symptomSeverities[otherThing][0] > 0){
+          symptomSeverities[otherThing][0] -= 1;
+          System.out.println("down " + symptomSeverities[otherThing][0]);
         }
       }
       // second symptom
       if (blnUpdateSymptom && mouseX >= 135 && mouseX <= 160 && mouseY <= 185 + 80 && mouseY >= 155 + 80){
-        if (symptomSeverities[originalNum][1] < 10){
-          symptomSeverities[originalNum][1] += 1;
-          System.out.println("up " + symptomSeverities[originalNum][1]);
+        if (symptomSeverities[otherThing][1] < 10){
+          symptomSeverities[otherThing][1] += 1;
+          System.out.println("up " + symptomSeverities[otherThing][1]);
         }
       }
       if (blnUpdateSymptom && mouseX >= 185 && mouseX <= 215 && mouseY <= 185 + 80 && mouseY >= 155 + 80){
-        if (symptomSeverities[originalNum][1] > 0){
-          symptomSeverities[originalNum][1] -= 1;
-          System.out.println("down " + symptomSeverities[originalNum][1]);
+        if (symptomSeverities[otherThing][1] > 0){
+          symptomSeverities[otherThing][1] -= 1;
+          System.out.println("down " + symptomSeverities[otherThing][1]);
         }
       }
 
       // Third Symptom
       if (blnUpdateSymptom && mouseX >= 135 && mouseX <= 160 && mouseY <= 185 + 160 && mouseY >= 155 + 160){
-        if (symptomSeverities[originalNum][2] < 10){
-          symptomSeverities[originalNum][2] += 1;
-          System.out.println("up " + symptomSeverities[originalNum][2]);
+        if (symptomSeverities[otherThing][2] < 10){
+          symptomSeverities[otherThing][2] += 1;
+          System.out.println("up " + symptomSeverities[otherThing][2]);
         }
       }
       if (blnUpdateSymptom && mouseX >= 185 && mouseX <= 215 && mouseY <= 185 + 160 && mouseY >= 155 + 160){
-        if (symptomSeverities[originalNum][2] > 0){
-          symptomSeverities[originalNum][2] -= 1;
-          System.out.println("down " + symptomSeverities[originalNum][2]);
+        if (symptomSeverities[otherThing][2] > 0){
+          symptomSeverities[otherThing][2] -= 1;
+          System.out.println("down " + symptomSeverities[otherThing][2]);
         }
       }
 
       // Fourth Symptom
       if (blnUpdateSymptom && mouseX >= 135 && mouseX <= 160 && mouseY <= 185 + 240 && mouseY >= 155 + 240){
-        if (symptomSeverities[originalNum][3] < 10){
-          symptomSeverities[originalNum][3] += 1;
-          System.out.println("up " + symptomSeverities[originalNum][3]);
+        if (symptomSeverities[otherThing][3] < 10){
+          symptomSeverities[otherThing][3] += 1;
+          System.out.println("up " + symptomSeverities[otherThing][3]);
         }
       }
       if (blnUpdateSymptom && mouseX >= 185 && mouseX <= 215 && mouseY <= 185 + 240 && mouseY >= 155 + 240){
-        if (symptomSeverities[originalNum][3] > 0){
-          symptomSeverities[originalNum][3] -= 1;
-          System.out.println("down " + symptomSeverities[originalNum][3]);
+        if (symptomSeverities[otherThing][3] > 0){
+          symptomSeverities[otherThing][3] -= 1;
+          System.out.println("down " + symptomSeverities[otherThing][3]);
         }
       }
 
